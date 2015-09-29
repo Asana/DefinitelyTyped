@@ -4,6 +4,7 @@
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 ///<reference path='../react/react.d.ts' />
+///<reference path='../react/react-addons.d.ts' />
 
 declare module ReactRouter {
     import React = __React;
@@ -113,12 +114,13 @@ declare module ReactRouter {
     // Components
     // ----------------------------------------------------------------------
     // Link
-    interface LinkProp extends React.HTMLAttributes {
+    interface LinkProp {
         activeClassName?: string;
         activeStyle?: {};
         to: string;
         params?: {};
         query?: {};
+        onClick?: Function;
     }
     interface Link extends React.ReactElement<LinkProp>, Navigation, State {
         handleClick(event: any): void;
@@ -172,7 +174,7 @@ declare module ReactRouter {
 
     function create(options: RouterCreateOption): Router;
     function run(routes: Route, callback: RouterRunCallback): Router;
-    function run(routes: Route, location: LocationBase | string, callback: RouterRunCallback): Router;
+    function run(routes: Route, location: LocationBase, callback: RouterRunCallback): Router;
 
 
     //

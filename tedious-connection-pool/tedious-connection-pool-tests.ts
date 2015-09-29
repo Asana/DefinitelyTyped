@@ -16,7 +16,7 @@ var config: tedious.ConnectionConfig = {
 	server: "127.0.0.1",
 	options: {
 		database: "somedb",
-		instanceName: "someinstance"
+		instance: "someinstance"
 	}
 };
 

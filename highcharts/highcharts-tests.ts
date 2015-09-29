@@ -112,7 +112,9 @@ var chart2 = new Highcharts.Chart({
 });
 
 chart1.exportChart(null, {
-    backgroundColor: '#FFFFFF'
+    chart: {
+        backgroundColor: '#FFFFFF'
+    }
 });
 
 
@@ -135,11 +137,3 @@ var highChartSettings: HighchartsOptions = {
 var container = $("#container").highcharts(highChartSettings, (chart) => {
     chart.series[0].setVisible(true, true);
 });
-
-
-var singleYAxisOptions: HighchartsOptions = {
-    yAxis: {}
-};
-var multipleYAxisOptions: HighchartsOptions = {
-    yAxis: [{},{}]
-};

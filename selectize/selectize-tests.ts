@@ -212,7 +212,7 @@ interface Link {
 }
 
 $('#select-links').selectize({
-    // NOTE ( https://github.com/borisyankov/DefinitelyTyped/pull/5590 ) theme: 'links',
+    theme: 'links',
     maxItems: null,
     valueField: 'id',
     searchField: 'title',
@@ -418,3 +418,4 @@ $("#select-car").selectize({
     plugins: ['optgroup_columns'],
     openOnFocus: false
 });
+

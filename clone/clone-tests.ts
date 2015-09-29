@@ -1,5 +1,3 @@
-/// <reference path="./clone.d.ts" />
-
 import clone = require("clone");
 
 var original = {

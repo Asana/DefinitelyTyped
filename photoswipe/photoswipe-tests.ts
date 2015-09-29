@@ -6,11 +6,13 @@ function test_defaultUI() {
             src: "path/to/image.jpg",
             w: 100,
             h: 200,
+            specialProperty: true
         },
         {
             src: "path/to/image2.jpg",
             w: 1000,
             h: 2000,
+            specialProperty: false
         }
     ];
 
@@ -51,8 +53,7 @@ function test_defaultUI() {
             return el.tagName === 'A';
         },
         mainScrollEndFriction: 0.35,
-        panEndFriction: 0.35,
-        modal: true
+        panEndFriction: 0.35
     };
 
     var photoSwipe: PhotoSwipe<PhotoSwipeUI_Default.Options>;

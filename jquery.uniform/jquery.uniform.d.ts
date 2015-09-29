@@ -5,7 +5,7 @@
 
 /// <reference path="../jquery/jquery.d.ts" />
 
-interface UniformCoreOptions {
+interface UniformOptions {
     activeClass?: string;
     autoHide?: boolean;
     buttonClass?: string;
@@ -22,7 +22,6 @@ interface UniformCoreOptions {
     hoverClass?: string;
     idPrefix?: string;
     inputAddTypeAsClass?: boolean;
-    inputClass?: string;
     radioClass?: string;
     resetDefaultHtml?: string;
     resetSelector?: any;
@@ -34,17 +33,12 @@ interface UniformCoreOptions {
     useID?: boolean;
     wrapperClass?: string;
 }
-
-interface UniformOptions extends UniformCoreOptions {
-    [option: string]: any;
-}
-
 interface Uniform {
     (options?: UniformOptions): JQuery;
     update(elemOrSelector?: any): void;
     restore(elemOrSelector?: any): void;
     elements: JQuery[];
-    defaults: UniformOptions;
+	defaults: UniformOptions;
 }
 interface JQueryStatic {
     uniform: Uniform;

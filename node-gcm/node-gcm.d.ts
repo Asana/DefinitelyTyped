@@ -10,9 +10,6 @@ declare module "node-gcm" {
         delayWhileIdle?: boolean;
         timeToLive?: number;
         dryRun?: boolean;
-        data: {
-            [key: string]: string;
-        };
     }
 
     export class Message {
@@ -23,7 +20,7 @@ declare module "node-gcm" {
         dryRun: boolean;
 
         addData(key: string, value: string): void;
-        addData(data: { [key: string]: string }): void;
+        addData(data: any): void;
     }
 
 

@@ -43,10 +43,7 @@ declare module "gulp-sass" {
         sync?: boolean;
     }
 
-    interface Sass {
-        (opts?: Options): NodeJS.ReadWriteStream;
-    }
+    function sass(opts?: Options): NodeJS.ReadWriteStream;
 
-    var _tmp: Sass;
-    export = _tmp;
+    export = sass;
 }

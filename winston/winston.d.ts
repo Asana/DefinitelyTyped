@@ -8,6 +8,7 @@
 /// <reference path="../node/node.d.ts" />
 
 declare module "winston" {
+
   export var transports: Transports;
   export var Transport: TransportStatic;
   export var Logger: LoggerStatic;
@@ -97,11 +98,6 @@ declare module "winston" {
      * @type {(boolean|(err: Error) => void)}
      */
     exitOnError?: any;
-
-    // TODO: Need to make instances specific,
-    //       and need to get options for each instance.
-    //       Unfortunately, the documentation is unhelpful.
-    [optionName: string]: any;
   }
 
   export interface TransportStatic {
@@ -109,38 +105,10 @@ declare module "winston" {
   }
 
   export interface TransportInstance extends TransportStatic, NodeJS.EventEmitter {
-    formatQuery(query: (string|Object)): (string|Object);
+    formatQuery(query: any): any;
     normalizeQuery(options: QueryOptions): QueryOptions;
-    formatResults(results: (Object|Array<any>), options?: Object): (Object|Array<any>);
-    logException(msg: string, meta: Object, callback: () => void): void;
-  }
-
-  export interface ConsoleTransportInstance extends TransportInstance {
-    new (options?: ConsoleTransportOptions): ConsoleTransportInstance;
-  }
-
-  export interface DailyRotateFileTransportInstance extends TransportInstance {
-    new (options?: DailyRotateFileTransportOptions): DailyRotateFileTransportInstance;
-  }
-
-  export interface FileTransportInstance extends TransportInstance {
-    new (options?: FileTransportOptions): FileTransportInstance;
-  }
-
-  export interface HttpTransportInstance extends TransportInstance {
-    new (options?: HttpTransportOptions): HttpTransportInstance;
-  }
-
-  export interface MemoryTransportInstance extends TransportInstance {
-    new (options?: MemoryTransportOptions): MemoryTransportInstance;
-  }
-
-  export interface WebhookTransportInstance extends TransportInstance {
-    new (options?: WebhookTransportOptions): WebhookTransportInstance;
-  }
-
-  export interface WinstonModuleTrasportInstance extends TransportInstance {
-    new (options?: WinstonMoudleTransportOptions): WinstonModuleTrasportInstance;
+    formatResults(results: any, options: any): any;
+    logException(msg: string, meta: any, callback: () => void): void;
   }
 
   export interface ContainerStatic {
@@ -158,13 +126,13 @@ declare module "winston" {
   }
 
   export interface Transports {
-    File: FileTransportInstance;
-    Console: ConsoleTransportInstance;
-    Loggly: WinstonModuleTrasportInstance;
-    DailyRotateFile: DailyRotateFileTransportInstance;
-    Http: HttpTransportInstance;
-    Memory: MemoryTransportInstance;
-    Webhook: WebhookTransportInstance;
+    File: TransportInstance;
+    Console: TransportInstance;
+    Loggly: TransportInstance;
+    DailyRotateFile: TransportInstance;
+    Http: TransportInstance;
+    Memory: TransportInstance;
+    Webhook: TransportInstance;
   }
 
   export interface TransportOptions {
@@ -172,111 +140,7 @@ declare module "winston" {
     silent?: boolean;
     raw?: boolean;
     name?: string;
-    formatter?: Function;
     handleExceptions?: boolean;
-    exceptionsLevel?: string;
-    humanReadableUnhandledException?: boolean;
-  }
-
-  export interface ConsoleTransportOptions extends TransportOptions {
-    json?: boolean;
-    colorize?: boolean;
-    prettyPrint?: boolean;
-    timestamp?: (Function|boolean);
-    showLevel?: boolean;
-    label?: string;
-    logstash?: boolean;
-    debugStdout?: boolean;
-    depth?: number;
-  }
-
-  export interface DailyRotateFileTransportOptions extends TransportOptions {
-    json?: boolean;
-    colorize?: boolean;
-    prettyPrint?: boolean;
-    timestamp?: (Function|boolean);
-    showLevel?: boolean;
-    label?: string;
-    logstash?: boolean;
-    depth?: number;
-    maxsize?: number;
-    maxFiles?: number;
-    eol?: string;
-    maxRetries?: number;
-    datePattern?: string;
-    filename?: string;
-    dirname?: string;
-    options?: {
-      flags?: string;
-      highWaterMark?: number;
-    }
-    stream?: NodeJS.WritableStream;
-  }
-
-  export interface FileTransportOptions extends TransportOptions {
-    json?: boolean;
-    colorize?: boolean;
-    prettyPrint?: boolean;
-    timestamp?: (Function|boolean);
-    showLevel?: boolean;
-    label?: string;
-    logstash?: boolean;
-    depth?: number;
-    maxsize?: number;
-    rotationFormat?: boolean;
-    zippedArchive?: boolean;
-    maxFiles?: number;
-    eol?: string;
-    tailable?: boolean;
-    maxRetries?: number;
-    filename?: string;
-    dirname?: string;
-    options?: {
-      flags?: string;
-      highWaterMark?: number;
-    }
-    stream?: NodeJS.WritableStream;
-  }
-
-  export interface HttpTransportOptions extends TransportOptions {
-    ssl?: boolean;
-    host?: string;
-    port?: number;
-    auth?: {
-      username: string;
-      password: string;
-    };
-    path?: string;
-  }
-
-  export interface MemoryTransportOptions extends TransportOptions {
-    json?: boolean;
-    colorize?: boolean;
-    prettyPrint?: boolean;
-    timestamp?: (Function|boolean);
-    showLevel?: boolean;
-    label?: string;
-    depth?: number;
-  }
-
-  export interface WebhookTransportOptions extends TransportOptions {
-    host?: string;
-    port?: number;
-    method?: string;
-    path?: string;
-    auth?: {
-      username?: string;
-      password?: string;
-    };
-    ssl?: {
-      key?: any;
-      cert?: any;
-      ca: any;
-    };
-  }
-
-  export interface WinstonMoudleTransportOptions extends TransportOptions {
-    [optionName: string]: any;
   }
 
   export interface QueryOptions {

@@ -1,11 +1,8 @@
 /// <reference path="nouislider.d.ts" />
+/// <reference path="../jquery/jquery.d.ts" />
 
-var testHtmlElement = document.getElementById('test');
-
-/**
- * Basic
- */
-noUiSlider.create(testHtmlElement, {
+//basic
+var basicSlider = $("<div/>").noUiSlider({
 	start: 80,
 	range: {
 		'min': 0,
@@ -13,26 +10,24 @@ noUiSlider.create(testHtmlElement, {
 	}
 });
 
-/**
- * All options
- */
-noUiSlider.create(testHtmlElement, {
+//all options
+var allOptions =  $("<div/>").noUiSlider({
 	start: [ 20, 80 ],
 	step: 10,
 	margin: 20,
 	connect: true,
 	direction: 'rtl',
 	orientation: 'vertical',
-
+	
 	// Configure tapping, or make the selected range dragable.
 	behaviour: 'tap-drag',
-
+	
 	// Full number format support.
 	format: wNumb({
 		mark: ',',
 		decimals: 1
 	}),
-
+	
 	// Support for non-linear ranges by adding intervals.
 	range: {
 		'min': 0,
@@ -40,49 +35,41 @@ noUiSlider.create(testHtmlElement, {
 	}
 });
 
-/**
- * Pips
- */
-noUiSlider.create(testHtmlElement, {
-    start: 0,
-    range: {
-        min: 0,
-        max: 10
-    },
-    pips: {
-        mode: 'steps',
-        density: 3,
-        filter: function () { return 1 },
-        format: wNumb({
-            decimals: 2,
-            prefix: '$'
-        }),
-    }
+
+//PIPS
+allOptions.noUiSlider_pips({
+	mode: 'steps',
+	density: 3,
+	filter: function(){return 1},
+	format: wNumb({
+		decimals: 2,
+		prefix: '$'
+	})
 });
 
-/**
- * Functions
- * Need to cast the HTMLElement as noUiSlider.Instance.
- */
-// Get value
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.get();
+
+basicSlider.noUiSlider_pips({
+	mode: 'values',
+	values: [50, 552, 4651, 4952, 5000, 7080, 9000],
+	density: 4,
+	stepped: true
+});
+
+//functions
+
+allOptions.val();
 
 // Set one value
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.set(10);
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.set([150]);
+basicSlider.val(10);
+basicSlider.val([150]);
 
 // Set the upper handle,
 // don't change the lower one.
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.set([null, 14]);
+allOptions.val([null, 14]);
 
 // Set both slider handles
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.set([13.2, 15.7]);
+allOptions.val([13.2, 15.7]);
 
-// Events
-var callback: noUiSlider.Callback = (values, handle, unencoded) => {};
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.on('event', callback);
 
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.off('event');
-
-(<noUiSlider.Instance>testHtmlElement).noUiSlider.destroy();
-
+//link
+allOptions.Link('lower').to($('<span/>'));

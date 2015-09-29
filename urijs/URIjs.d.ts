@@ -95,10 +95,10 @@ declare module uri {
         search(qry: boolean): any;
         search(qry: Object): URI;
         segment(): string[];
-        segment(segments: string[]): URI;
+        segment(segments: string[]): string;
         segment(position: number): string;
-        segment(position: number, level: string): URI;
-        segment(segment: string): URI;
+        segment(position: number, level: string): string;
+        segment(level: string): string;
         setQuery(key: string, value: string): URI;
         setQuery(qry: Object): URI;
         setSearch(key: string, value: string): URI;

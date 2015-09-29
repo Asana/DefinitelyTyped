@@ -4,6 +4,8 @@
 var peerByOption: PeerJs.Peer = new Peer({
     key: 'peerKey',
     debug: 3,
+    logFunction: ()=>{
+    }
 });
 
 peerByOption.listAllPeers(function(items){
@@ -19,6 +21,8 @@ var peerByIdAndOption: PeerJs.Peer = new Peer(
     {
         key: 'peerKey',
         debug: 3,
+        logFunction: ()=>{
+        }
     });
 
 var id = peerByOption.id;

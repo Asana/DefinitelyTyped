@@ -14,7 +14,6 @@ var superStringDistance = function(string1: string, string2: string): number {
 
 $('#email').on('blur', function() {
     $(this).mailcheck({
-        email: 'nonoptional@example.com',
         domains: domains,                       // optional
         secondLevelDomains: secondLevelDomains, // optional
         topLevelDomains: topLevelDomains,       // optional
@@ -29,7 +28,6 @@ $('#email').on('blur', function() {
 });
 
 Mailcheck.run({
-    email: 'nonoptional@example.com',
     domains: domains,                       // optional
     secondLevelDomains: secondLevelDomains, // optional
     topLevelDomains: topLevelDomains,       // optional
@@ -43,7 +41,6 @@ Mailcheck.run({
 });
 
 MC.run({
-    email: 'nonoptional@example.com',
     domains: domains,                       // optional
     secondLevelDomains: secondLevelDomains, // optional
     topLevelDomains: topLevelDomains,       // optional

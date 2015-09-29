@@ -570,7 +570,7 @@ declare module "readline" {
     import stream = require("stream");
 
     export interface ReadLine extends events.EventEmitter {
-        setPrompt(prompt: string): void;
+        setPrompt(prompt: string, length: number): void;
         prompt(preserveCursor?: boolean): void;
         question(query: string, callback: Function): void;
         pause(): void;
@@ -1089,12 +1089,12 @@ declare module "crypto" {
         setAutoPadding(auto_padding: boolean): void;
     }
     export function createSign(algorithm: string): Signer;
-    interface Signer extends NodeJS.WritableStream {
+    interface Signer {
         update(data: any): void;
         sign(private_key: string, output_format: string): string;
     }
     export function createVerify(algorith: string): Verify;
-    interface Verify extends NodeJS.WritableStream {
+    interface Verify {
         update(data: any): void;
         verify(object: string, signature: string, signature_format?: string): boolean;
     }

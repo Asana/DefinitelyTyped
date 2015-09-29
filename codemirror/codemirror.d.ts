@@ -471,10 +471,6 @@ declare module CodeMirror {
         It may be "start" , "end" , "head"(the side of the selection that moves when you press shift + arrow),
         or "anchor"(the fixed side of the selection).Omitting the argument is the same as passing "head".A { line , ch } object will be returned. */
         getCursor(start?: string): CodeMirror.Position;
-        
-        /** Retrieves a list of all current selections. These will always be sorted, and never overlap (overlapping selections are merged). 
-        Each object in the array contains anchor and head properties referring to {line, ch} objects. */
-        listSelections(): { anchor: CodeMirror.Position; head: CodeMirror.Position }[];
 
         /** Return true if any text is selected. */
         somethingSelected(): boolean;
@@ -787,10 +783,7 @@ declare module CodeMirror {
         viewportMargin?: number;
 
         /** Optional lint configuration to be used in conjunction with CodeMirror's linter addon. */
-        lint?: boolean | LintOptions;
-
-	/** Optional value to be used in conduction with CodeMirror’s placeholder add-on. */
-	placeholder?: string;
+        lint?: LintOptions;
     }
 
     interface TextMarkerOptions {
@@ -1092,8 +1085,4 @@ declare module CodeMirror {
         severity?: string;
         to?: Position;
     }
-}
-
-declare module "codemirror" {
-    export = CodeMirror;
 }

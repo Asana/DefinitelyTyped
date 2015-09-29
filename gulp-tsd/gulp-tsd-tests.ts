@@ -9,7 +9,7 @@ gulp.task("tsd", () => {
         .pipe(tsd());
 });
 
-gulp.task("tsd:options", (callback: any) => {
+gulp.task("tsd:options", callback => {
     tsd({
         command: "reinstall",
         config: "tsd.json"

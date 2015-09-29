@@ -6,7 +6,9 @@
 /// <reference path="../node/node.d.ts" />
 
 declare module "bunyan" {
-    import { EventEmitter } from 'events';
+    import events = require('events');
+    import EventEmitter = events.EventEmitter;
+    import WritableStream = NodeJS.WritableStream;
 
     class Logger extends EventEmitter {
         constructor(options:LoggerOptions);
@@ -16,7 +18,6 @@ declare module "bunyan" {
         child(obj:Object, simple?:boolean):Logger;
         reopenFileStreams():void;
 
-        level():string|number;
         level(value: number | string):void;
         levels(name: number | string, value: number | string):void;
 
@@ -49,8 +50,8 @@ declare module "bunyan" {
     interface LoggerOptions {
         name: string;
         streams?: Stream[];
-        level?: string | number;
-        stream?: NodeJS.WritableStream;
+        level?: string;
+        stream?: WritableStream;
         serializers?: Serializers;
         src?: boolean;
     }
@@ -63,10 +64,8 @@ declare module "bunyan" {
         type?: string;
         level?: number | string;
         path?: string;
-        stream?: NodeJS.WritableStream | Stream;
+        stream?: WritableStream | Stream;
         closeOnExit?: boolean;
-        period?: string;
-        count?: number;
     }
 
     export var stdSerializers:Serializers;

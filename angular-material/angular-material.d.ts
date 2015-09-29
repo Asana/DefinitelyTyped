@@ -122,7 +122,6 @@ declare module angular.material {
         theme(theme: string): T;
         hideDelay(delay: number): T;
         position(position: string): T;
-        parent(parent?: string|Element|JQuery): T; // default: root node
     }
 
     interface ISimpleToastPreset extends IToastPreset<ISimpleToastPreset> {

@@ -218,30 +218,6 @@ declare module Fancytree {
 
         //#region Methods
         /**
-         * Append (or insert) a list of child nodes. 
-         * 
-         * @param children array of child node definitions (also single child accepted)
-         * @param insertBefore child node to insert nodes before. If omitted, the new children is appended.
-         * @returns The first child added.
-         */
-        addChildren(children: Fancytree.NodeData[], insertBefore?: FancytreeNode): FancytreeNode;
-        /**
-         * Append (or insert) a list of child nodes. 
-         * 
-         * @param children array of child node definitions (also single child accepted)
-         * @param insertBefore key of the child node to insert nodes before. If omitted, the new children is appended.
-         * @returns The first child added.
-         */
-        addChildren(children: Fancytree.NodeData[], insertBefore?: string): FancytreeNode;
-        /**
-         * Append (or insert) a list of child nodes. 
-         * 
-         * @param children array of child node definitions (also single child accepted)
-         * @param insertBefore index of the child node to insert nodes before. If omitted, the new children is appended.
-         * @returns The first child added.
-         */
-        addChildren(children: Fancytree.NodeData[], insertBefore?: number): FancytreeNode;
-        /**
          * Append (or insert) a single child node. 
          * 
          * @param child node to add
@@ -265,6 +241,30 @@ declare module Fancytree {
          * @returns The child added.
          */
         addChildren(child: Fancytree.NodeData, insertBefore?: number): FancytreeNode;
+        /**
+         * Append (or insert) a list of child nodes. 
+         * 
+         * @param children array of child node definitions (also single child accepted)
+         * @param insertBefore child node to insert nodes before. If omitted, the new children is appended.
+         * @returns The first child added.
+         */
+        addChildren(children: Fancytree.NodeData[], insertBefore?: FancytreeNode): FancytreeNode;
+        /**
+         * Append (or insert) a list of child nodes. 
+         * 
+         * @param children array of child node definitions (also single child accepted)
+         * @param insertBefore key of the child node to insert nodes before. If omitted, the new children is appended.
+         * @returns The first child added.
+         */
+        addChildren(children: Fancytree.NodeData[], insertBefore?: string): FancytreeNode;
+        /**
+         * Append (or insert) a list of child nodes. 
+         * 
+         * @param children array of child node definitions (also single child accepted)
+         * @param insertBefore index of the child node to insert nodes before. If omitted, the new children is appended.
+         * @returns The first child added.
+         */
+        addChildren(children: Fancytree.NodeData[], insertBefore?: number): FancytreeNode;
 
 
         /** Append or prepend a node, or append a child node. This a convenience function that calls addChildren()  
@@ -780,7 +780,6 @@ declare module Fancytree {
     interface NodeData {
         /** node text (may contain HTML tags) */
         title: string;
-        icon?: string;
         /** unique key for this node (auto-generated if omitted) */
         key?: string;
         /** (reserved) */

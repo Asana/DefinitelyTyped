@@ -267,7 +267,6 @@ declare module OData {
 
     interface ICountResult{
         result: number;
-        $promise: angular.IPromise<any>;
     }
 
     class Provider<T> {
@@ -279,17 +278,14 @@ declare module OData {
         private expandables;
         constructor(callback: ProviderCallback<T>);
         filter(operand1: any, operand2?: any, operand3?: any): Provider<T>;
-        orderBy(arg1: string, arg2?: string): Provider<T>;
+        orderBy(arg1: any, arg2?: any): Provider<T>;
         take(amount: number): Provider<T>;
         skip(amount: number): Provider<T>;
         private execute();
-        query(success?: ((p:T[])=>void), error?: (()=>void)): T[];
-        single(success?: ((p:T)=>void), error?: (()=>void)): T;
-        get(key: any, success?: ((p:T)=>void), error?: (()=>void)): T;
-        expand(...params: string[]): Provider<T>;
-        expand(params: string[]): Provider<T>;
-        select(...params: string[]): Provider<T>;
-        select(params: string[]): Provider<T>;
+        query(success?: any, error?: any): T[];
+        single(success?: any, error?: any): T;
+        get(data: any, success?: any, error?: any): T;
+        expand(params: any, otherParam1?: any, otherParam2?: any, otherParam3?: any, otherParam4?: any, otherParam5?: any, otherParam6?: any, otherParam7?: any): Provider<T>;
         count(success?: (result: ICountResult) => any, error?: () => any):ICountResult;
         withInlineCount(): Provider<T>;
     }

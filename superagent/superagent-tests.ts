@@ -56,11 +56,6 @@ request
   .delete('/user/1')
   .end(callback);
 
-request
-  .delete('/user/1')
-  .send()
-  .end(callback);
-
 request('/search')
   .end(callback);
 

@@ -46,9 +46,7 @@ declare module MailcheckModule {
     }
 
     export interface IOptions {
-        email: string;
         domains?: string[];
-        secondLevelDomains?: string[];
         topLevelDomains?: string[];
         distanceFunction?: IDistanceFunction;
         suggested?: ISuggested | IJQuerySuggested;

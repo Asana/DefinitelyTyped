@@ -527,7 +527,6 @@ declare module "mongodb" {
   export interface MongoCollectionOptions {
     safe?: any;
     serializeFunctions?: any;
-    strict?: boolean;
     raw?: boolean;
     pkFactory?: any;
     readPreference?: string;

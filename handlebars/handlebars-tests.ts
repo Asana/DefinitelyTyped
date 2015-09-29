@@ -80,5 +80,3 @@ Handlebars.registerHelper('fullName', (person: typeof context.author) => {
 });
 
 var escapedExpression = Handlebars.Utils.escapeExpression('<script>alert(\'xss\');</script>');
-
-Handlebars.helpers !== undefined;

@@ -23,7 +23,7 @@
 //
 interface KnockoutStatic {
     // create a command - two overloads
-    command: (param: Function | KoPlus.CommandOptions) => KoPlus.Command;
+    command: (param: KoPlus.Callback | KoPlus.CommandOptions) => KoPlus.Command;
 
     editable: KoPlus.EditableStatic;
     editableArray: KoPlus.EditableArrayStatic;
@@ -60,6 +60,8 @@ interface KnockoutBindingHandlers {
 // namespace for ko.plus types
 //
 declare module KoPlus {
+    // predefine a callback type
+    export type Callback = () => void;
 
     //#region Command types
 
@@ -89,9 +91,9 @@ declare module KoPlus {
 
         fail: (callback: (error: string) => void) => Command;
 
-        always: (callback: Function) => Command;
+        always: (callback: Callback) => Command;
 
-        then: (resolve: Function, reject: Function) => Command;
+        then: (resolve: Callback, reject: Callback) => Command;
     }
 
     //
@@ -100,7 +102,7 @@ declare module KoPlus {
     //
     export interface CommandOptions {
         // [required] sets the command action method
-        action: Function;
+        action: Callback;
 
         // [optional] function to determine if command can be executed
         canExecute?: () => boolean;

@@ -8,7 +8,7 @@ var options: MarkedOptions = {
     breaks: false,
     pedantic: false,
     sanitize: true,
-    smartLists: true,
+    smartLsts: true,
     silent: false,
     highlight: function (code: string, lang: string) {
     	return '';

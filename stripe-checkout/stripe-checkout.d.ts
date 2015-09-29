@@ -15,13 +15,12 @@ interface StripeCheckoutHandler {
 }
 
 interface StripeCheckoutOptions {
-    key?: string;
-    token?: (token: StripeTokenResponse) => void;
+    key: string;
+    token: (token: StripeTokenResponse) => void;
     image?: string;
     name?: string;
     description?: string;
     amount?: number;
-    locale?: string;
     currency?: string;
     panelLabel?: string;
     zipCode?: boolean;

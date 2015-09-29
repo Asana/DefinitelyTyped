@@ -12,22 +12,12 @@ declare module "express-jwt" {
 
     function jwt(options: jwt.Options): jwt.RequestHandler;
 
-    interface IDoneCallback<T> {
-        (err: Error, result: T): void;
-    }
-
-    type ICallback = <T>(req: express.Request, payload: T, done: IDoneCallback<boolean>) => void;
-
     module jwt {
         export interface Options {
-            secret: string|ICallback;
+            secret: string;
             userProperty?: string;
             skip?: string[];
             credentialsRequired?: boolean;
-            isRevoked?: boolean;
-            requestProperty?: string;
-            getToken?: ICallback;
-            [property: string]: any;
         }
         export interface RequestHandler extends express.RequestHandler {
             unless?: typeof unless;

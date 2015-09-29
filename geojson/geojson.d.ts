@@ -44,6 +44,7 @@ declare module GeoJSON {
     */
     export interface MultiPoint extends GeometryObject
     {
+    
         coordinates: Position[]
     }
 

@@ -4,25 +4,21 @@
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 interface AutoCollectConsole {
-    constructor(client: Client): AutoCollectConsole;
     enable(isEnabled: boolean): void;
     isInitialized(): boolean;
 }
 
 interface AutoCollectExceptions {
-    constructor(client:Client): AutoCollectExceptions;
     isInitialized(): boolean;
     enable(isEnabled:boolean): void;
 }
 
 interface AutoCollectPerformance {
-    constructor(client: Client): AutoCollectPerformance;
     enable(isEnabled: boolean): void;
     isInitialized(): boolean;
 }
 
 interface AutoCollectRequests {
-    constructor(client: Client): AutoCollectRequests;
     enable(isEnabled: boolean): void;
     isInitialized(): boolean;
 }
@@ -89,17 +85,14 @@ declare module ContractsModule {
         sampleRate: string;
         internalSdkVersion: string;
         internalAgentVersion: string;
-        constructor(): ContextTagKeys;
     }
     interface Domain {
         ver: number;
         properties: any;
-        constructor(): Domain;
     }
     interface Data<TDomain extends ContractsModule.Domain> {
         baseType: string;
         baseData: TDomain;
-        constructor(): Data<TDomain>;
     }
     interface Envelope {
         ver: number;
@@ -119,21 +112,18 @@ declare module ContractsModule {
             [key: string]: string;
         };
         data: Data<Domain>;
-        constructor(): Envelope;
     }
     interface EventData extends ContractsModule.Domain {
         ver: number;
         name: string;
         properties: any;
         measurements: any;
-        constructor(): EventData;
     }
     interface MessageData extends ContractsModule.Domain {
         ver: number;
         message: string;
         severityLevel: ContractsModule.SeverityLevel;
         properties: any;
-        constructor(): MessageData;
     }
     interface ExceptionData extends ContractsModule.Domain {
         ver: number;
@@ -144,7 +134,6 @@ declare module ContractsModule {
         crashThreadId: number;
         properties: any;
         measurements: any;
-        constructor(): ExceptionData;
     }
     interface StackFrame {
         level: number;
@@ -152,7 +141,6 @@ declare module ContractsModule {
         assembly: string;
         fileName: string;
         line: number;
-        constructor(): StackFrame;
     }
     interface ExceptionDetails {
         id: number;
@@ -162,7 +150,6 @@ declare module ContractsModule {
         hasFullStack: boolean;
         stack: string;
         parsedStack: StackFrame[];
-        constructor(): ExceptionDetails;
     }
     interface DataPoint {
         name: string;
@@ -172,13 +159,11 @@ declare module ContractsModule {
         min: number;
         max: number;
         stdDev: number;
-        constructor(): DataPoint;
     }
     interface MetricData extends ContractsModule.Domain {
         ver: number;
         metrics: DataPoint[];
         properties: any;
-        constructor(): MetricData;
     }
     interface PageViewData extends ContractsModule.EventData {
         ver: number;
@@ -187,7 +172,6 @@ declare module ContractsModule {
         duration: string;
         properties: any;
         measurements: any;
-        constructor(): PageViewData;
     }
     interface PageViewPerfData extends ContractsModule.PageViewData {
         ver: number;
@@ -201,7 +185,6 @@ declare module ContractsModule {
         domProcessing: string;
         properties: any;
         measurements: any;
-        constructor(): PageViewPerfData;
     }
     interface RemoteDependencyData extends ContractsModule.Domain {
         ver: number;
@@ -219,7 +202,6 @@ declare module ContractsModule {
         commandName: string;
         dependencyTypeName: string;
         properties: any;
-        constructor(): RemoteDependencyData;
     }
     interface AjaxCallData extends ContractsModule.PageViewData {
         ver: number;
@@ -236,7 +218,6 @@ declare module ContractsModule {
         success: boolean;
         properties: any;
         measurements: any;
-        constructor(): AjaxCallData;
     }
     interface RequestData extends ContractsModule.Domain {
         ver: number;
@@ -250,12 +231,10 @@ declare module ContractsModule {
         url: string;
         properties: any;
         measurements: any;
-        constructor(): RequestData;
     }
     interface SessionStateData extends ContractsModule.Domain {
         ver: number;
         state: ContractsModule.SessionState;
-        constructor(): SessionStateData;
     }
     interface PerformanceCounterData extends ContractsModule.Domain {
         ver: number;
@@ -269,7 +248,6 @@ declare module ContractsModule {
         stdDev: number;
         value: number;
         properties: any;
-        constructor(): PerformanceCounterData;
     }
 }
 
@@ -331,14 +309,10 @@ interface Client {
      * Log a numeric value that is not associated with a specific event. Typically used to send regular reports of performance indicators.
      * To send a single measurement, use just the first two parameters. If you take measurements very frequently, you can reduce the
      * telemetry bandwidth by aggregating multiple measurements and sending the resulting average at intervals.
-     * @param name   A string that identifies the metric.
-     * @param value  The value of the metric
-     * @param count  the number of samples used to get this value
-     * @param min    the min sample for this set
-     * @param max    the max sample for this set
-     * @param stdDev the standard deviation of the set
+     * @param   name    A string that identifies the metric.
+     * @param   value The value of the metric
      */
-    trackMetric(name: string, value: number, count?:number, min?: number, max?: number, stdDev?: number): void;
+    trackMetric(name: string, value: number): void;
     trackRequest(request: any /* http.ServerRequest */, response: any /* http.ServerResponse */, properties?: {
         [key: string]: string;
     }): void;
@@ -408,15 +382,9 @@ declare class ApplicationInsights {
     private static _requests;
     private static _isStarted;
     /**
-     * Initializes a client with the given instrumentation key, if this is not specified, the value will be
-     * read from the environment variable APPINSIGHTS_INSTRUMENTATIONKEY
-     * @returns {ApplicationInsights/Client} a new client
-     */
-    static getClient(instrumentationKey?: string): Client;
-    /**
      * Initializes the default client of the client and sets the default configuration
      * @param instrumentationKey the instrumentation key to use. Optional, if this is not specified, the value will be
-     * read from the environment variable APPINSIGHTS_INSTRUMENTATIONKEY
+     * read from the environment variable APPINSIGHTS_INSTRUMENTATION_KEY
      * @returns {ApplicationInsights} this interface
      */
     static setup(instrumentationKey?: string): typeof ApplicationInsights;

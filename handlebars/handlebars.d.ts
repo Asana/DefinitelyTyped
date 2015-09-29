@@ -18,7 +18,6 @@ declare module Handlebars {
     export var Utils: typeof hbs.Utils;
     export var logger: Logger;
     export var templates: HandlebarsTemplates;
-    export var helpers: any;
 
     export module AST {
         export var helpers: hbs.AST.helpers;

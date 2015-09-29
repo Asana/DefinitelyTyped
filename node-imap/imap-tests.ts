@@ -1,5 +1,3 @@
-/// <reference path="./imap.d.ts" />
-
 import Imap = require('imap');
 var inspect = require('util').inspect;
 

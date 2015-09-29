@@ -127,7 +127,7 @@ declare module Chance {
         guid(): string;
         hash(opts?: Options): string;
         n<T>(generator: () => T, count: number, opts?: Options): T[];
-        normal(opts?: Options): number;
+        normal(opts?: Options): string;
         radio(opts?: Options): string;
         rpg(dice: string): number[];
         rpg(dice: string, opts?: Options): number[]|number;

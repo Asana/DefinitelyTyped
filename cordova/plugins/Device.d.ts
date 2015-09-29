@@ -24,8 +24,6 @@ interface Device {
     uuid: string;
     /** Get the operating system version. */
     version: string;
-	/** Get the device's manufacturer. */
-	manufacturer: string;
 }
 
 declare var device: Device;

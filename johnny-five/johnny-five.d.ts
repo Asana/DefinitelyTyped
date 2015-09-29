@@ -251,12 +251,10 @@ declare module "johnny-five" {
 
     export interface LCDI2COption extends LCDGeneralOption{
         controller: string;
-        backlight?: number;
     }
 
     export interface LCDParallelOption extends LCDGeneralOption{
         pins: Array<any>;
-        backlight?: number;
     }
 
     export class LCD{

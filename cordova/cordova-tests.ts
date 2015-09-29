@@ -176,12 +176,8 @@ file.download('http://some.server.com/download.php',
             console.error('Failed with exception ' + err.exception);
         }
     },
-    true,
-    {
-      headers: {
-        "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-      }
-    });
+    { headers: null },
+    true);
 
 file.upload('cdvfile://localhost/persistent/path/to/downloads/',
     'http://some.server.com/download.php',

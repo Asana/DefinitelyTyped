@@ -360,4 +360,5 @@ interface Window{
   RTCIceCandidate: RTCIceCandidate;
   webkitRTCIceCandidate: webkitRTCIceCandidate;
   mozRTCIceCandidate: mozRTCIceCandidate;
+  URL: URL;
 }

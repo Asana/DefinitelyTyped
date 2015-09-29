@@ -109,9 +109,3 @@ testSix();
 testSeven();
 testEight();
 testNine();
-
-var clock: Sinon.SinonFakeTimers = sinon.useFakeTimers();
-clock.setSystemTime(1000);
-clock.setSystemTime(new Date());
-
-

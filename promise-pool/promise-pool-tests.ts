@@ -1,5 +1,3 @@
-/// <reference path="./promise-pool.d.ts" />
-
 ﻿import Q = require('q');
 import promisePool = require('promise-pool');
 

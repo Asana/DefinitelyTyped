@@ -19,7 +19,6 @@ declare module Backbone {
 
     interface NavigateOptions {
         trigger?: boolean;
-        replace?: boolean;
     }
 
     interface RouterOptions {
@@ -310,8 +309,7 @@ declare module Backbone {
 
    interface ViewOptions<TModel extends Model> {
       model?: TModel;
-       // TODO: quickfix, this can't be fixed easy. The collection does not need to have the same model as the parent view.
-      collection?: Backbone.Collection<any>;
+      collection?: Backbone.Collection<TModel>;
       el?: any;
       id?: string;
       className?: string;

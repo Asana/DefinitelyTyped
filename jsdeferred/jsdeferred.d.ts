@@ -24,8 +24,8 @@ interface RetryOption {
 
 interface DeferredizedFunction { (...arg: any[]): Deferred; }
 interface DeferredizedFunctionWithNumber { (n: number): Deferred; }
-interface FunctionWithNumber { (i: number, o?: any): any;  }
-interface ErrorCallback { (d: Deferred, ...args: any[]): any; }
+interface FunctionWithNumber { (i: number, o?: any);  }
+interface ErrorCallback { (d: Deferred, ...args: any[]); }
 
 declare class Deferred {
 

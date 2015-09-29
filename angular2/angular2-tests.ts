@@ -16,7 +16,7 @@ class Cmp {
 Cmp.annotations = [
   Component({
     selector: 'cmp',
-    bindings: [Service, bind(Service2).toValue(null)]
+    injectables: [Service, bind(Service2).toValue(null)]
   }),
   View({
     template: '{{greeting}} world!',
@@ -27,9 +27,9 @@ Cmp.annotations = [
     properties: [
       'text: tooltip'
     ],
-    host: {
-      '(onmouseenter)': 'onMouseEnter()',
-      '(onmouseleave)': 'onMouseLeave()'
+    hostListeners: {
+      'onmouseenter': 'onMouseEnter()',
+      'onmouseleave': 'onMouseLeave()'
     }
   })
 ];

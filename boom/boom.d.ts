@@ -6,8 +6,7 @@
 /// <reference path="../node/node.d.ts" />
 
 declare module Boom {
-
-    export interface BoomError {
+    interface BoomError {
         data: any;
         reformat: () => void;
         isBoom: boolean;

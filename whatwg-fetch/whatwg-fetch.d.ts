@@ -10,20 +10,20 @@ declare class Request {
 	method: string;
 	url: string;
 	headers: Headers;
-	context: string|RequestContext;
+	context: RequestContext;
 	referrer: string;
-	mode: string|RequestMode;
-	credentials: string|RequestCredentials;
-	cache: string|RequestCache;
+	mode: RequestMode;
+	credentials: RequestCredentials;
+	cache: RequestCache;
 }
 
 interface RequestInit {
 	method?: string;
 	headers?: HeaderInit|{ [index: string]: string };
 	body?: BodyInit;
-	mode?: string|RequestMode;
-	credentials?: string|RequestCredentials;
-	cache?: string|RequestCache;
+	mode?: RequestMode;
+	credentials?: RequestCredentials;
+	cache?: RequestCache;
 }
 
 declare enum RequestContext {
@@ -58,7 +58,7 @@ declare class Response extends Body {
 	constructor(body?: BodyInit, init?: ResponseInit);
 	error(): Response;
 	redirect(url: string, status: number): Response;
-	type: string|ResponseType;
+	type: ResponseType;
 	url: string;
 	status: number;
 	ok: boolean;
@@ -80,5 +80,5 @@ declare type BodyInit = Blob|FormData|string;
 declare type RequestInfo = Request|string;
 
 interface Window {
-	fetch(url: string|Request, init?: RequestInit): Promise<Response>;
+	fetch(url: string, init?: RequestInit): Promise<Response>;
 }

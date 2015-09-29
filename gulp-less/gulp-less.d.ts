@@ -8,8 +8,7 @@
 declare module "gulp-less" {
 
     interface IOptions {
-        modifyVars?: {};
-        paths?: string[];
+        paths: string[];
         plugins?: any[];
     }
 

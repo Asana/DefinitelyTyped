@@ -92,8 +92,7 @@ myApp.controller('TestCtrl', (
   Restangular.setMethodOverriders(["put", "patch"]);
 
   Restangular.setErrorInterceptor(function (response) {
-      let location: string = response.headers('Location');
-      console.error('' + response.status + ' ' + response.data + ' ' + location);
+      console.error('' + response.status + ' ' + response.data);
   });
 
   Restangular.setRequestSuffix('.json');

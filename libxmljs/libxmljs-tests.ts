@@ -10,7 +10,7 @@ var xml =  '<?xml version="1.0" encoding="UTF-8"?>' +
                '<sibling>with content!</sibling>' +
            '</root>';
 
-var xmlDoc = libxmljs.parseXml(xml);
+var xmlDoc = libxmljs.parseXmlString(xml);
 
 // xpath queries
 var gchild = xmlDoc.get('//grandchild');

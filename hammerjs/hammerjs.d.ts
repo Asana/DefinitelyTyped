@@ -7,7 +7,7 @@
 
 declare var Hammer:HammerStatic;
 
-declare module "hammerjs" {
+declare module "Hammer" {
     export = Hammer;
 }
 
@@ -302,7 +302,7 @@ interface SwipeRecognizerStatic
   new( options?:any ):SwipeRecognizer;
 }
 
-interface SwipeRecognizer extends AttrRecognizer
+interface SwipeRecognizer
 {
 }
 

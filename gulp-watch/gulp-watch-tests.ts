@@ -10,7 +10,7 @@ gulp.task('stream', () =>
         .pipe(gulp.dest('build'))
 );
 
-gulp.task('callback', (cb: Function) =>
+gulp.task('callback', (cb) =>
     watch('css/**/*.css', () =>
         gulp.src('css/**/*.css')
             .pipe(watch('css/**/*.css'))

@@ -1,4 +1,5 @@
 /// <reference path="xrm.d.ts" />
+/// <reference path="clientglobalcontext.d.ts" />
 /// <reference path="parature.d.ts" />
 
 /// Demonstrate clientglobalcontext.d.ts 

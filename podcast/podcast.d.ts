@@ -64,12 +64,6 @@ interface IItemOptions
     date: Date;
     lat?: number;
     long?: number;
-    enclosure?: {
-        url: string;
-        file?: string;
-        size?: number;
-        mime?: string;
-    }
     itunesAuthor?: string;
     itunesExplicit?: boolean;
     itunesSubtitle?: string;

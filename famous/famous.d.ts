@@ -125,13 +125,7 @@ declare module "famous/dom-renderables" {
 	}
 	
 	export interface IDOMElementOptions {
-		tagName?: string;
-		classes?: string[];
-		attributes?: { [attributeName: string]: string };
-		properties?: { [attributeName: string]: string };
-		id?: string;
 		content?: string;
-		cutout?: boolean;
 	}
 }
 

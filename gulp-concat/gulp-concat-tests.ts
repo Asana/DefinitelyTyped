@@ -2,7 +2,7 @@
 /// <reference path="../gulp/gulp.d.ts" />
 
 import gulp = require("gulp");
-import * as concat from "gulp-concat";
+import concat = require("gulp-concat");
 
 gulp.task("concat:simple", () => {
     gulp.src(["file*.txt"])

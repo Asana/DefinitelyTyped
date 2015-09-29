@@ -27,18 +27,9 @@ declare module 'vinyl' {
 			*/
 			path?: string;
 			/**
-			* Path history. Has no effect if options.path is passed.
+			* Type: Buffer|Stream|null (Default: null)
 			*/
-			history?: string[];
-			/**
-			* The result of an fs.stat call. See fs.Stats for more information.
-			*/
-			stat?: fs.Stats;
-			/**
-			* File contents.
-			* Type: Buffer, Stream, or null
-			*/
-			contents?: Buffer | NodeJS.ReadWriteStream;
+			contents?: any;
 		});
 
 		/**
@@ -57,7 +48,7 @@ declare module 'vinyl' {
 		/**
 		* Type: Buffer|Stream|null (Default: null)
 		*/
-		public contents: Buffer | NodeJS.ReadableStream;
+		public contents: any;
 		/**
 		* Returns path.relative for the file base and file path.
 		* Example:

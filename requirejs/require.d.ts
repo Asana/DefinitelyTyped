@@ -166,8 +166,8 @@ interface RequireConfig {
 
 	/**
 	* Extra query string arguments appended to URLs that RequireJS
-	* uses to fetch resources.  Most useful to cache bust when
-	* the browser or server is not configured correctly.
+	* uses to fetch resources.  Most useful to cachce bust when
+	* the browser or server is not configured correcty.
 	*
 	* @example
 	* urlArgs: "bust= + (new Date()).getTime()

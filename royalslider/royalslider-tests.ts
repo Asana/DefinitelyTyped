@@ -10,10 +10,10 @@ $(".royalSlider").royalSlider({
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         autoScaleSlider: true,
         thumbs: {
-            // thumbnails options go here
+            // thumbnails options go gere
             spacing: 10,
             arrowsAutoHide: true
         }
@@ -22,10 +22,10 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         autoScaleSlider: true,
         fullscreen: {
-            // fullscreen options go here
+            // fullscreen options go gere
             enabled: true,
             nativeFS: true
         }
@@ -34,10 +34,10 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         autoScaleSlider: true,
         deeplinking: {
-            // deep linking options go here
+            // deep linking options go gere
             enabled: true,
             prefix: 'slider-'
         }
@@ -47,10 +47,10 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         autoScaleSlider: true,
         autoplay: {
-            // autoplay options go here
+            // autoplay options go gere
             enabled: true,
             pauseOnHover: true
         }
@@ -59,10 +59,10 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         autoScaleSlider: true,
         video: {
-            // video options go here
+            // video options go gere
             autoHideBlocks: true,
             autoHideArrows: false
         }
@@ -71,10 +71,10 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         autoScaleSlider: true,
         block: {
-            // animated blocks options go here
+            // animated blocks options go gere
             fadeEffect: false,
             moveEffect: 'left'
         }
@@ -83,7 +83,7 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     $(".royalSlider").royalSlider({
-        // general options go here
+        // general options go gere
         keyboardNavEnabled: true,
         visibleNearby: {
             enabled: true,
@@ -174,7 +174,7 @@ slider.ev.on('rsBeforeAnimStart', function (event) {
 slider.ev.on('rsBeforeMove', function (event: JQueryEventObject, type?: string, userAction?: boolean) {
     // before any transition start (including after drag release)
     // "type" - can be "next", "prev", or ID of slide to move
-    // userAction (Boolean) - defines if action is trighered by user (e.g. will be false if movement is trighered by autoPlay)
+    // userAction (Boolean) - defines if action is triggered by user (e.g. will be false if movement is triggered by autoPlay)
 });
 slider.ev.on('rsBeforeSizeSet', function (event) {
     // before size of slider is changed

@@ -5,7 +5,7 @@
 
 /* =================== USAGE ===================
 
-    import * as express from "express";
+    import express = require('express');
     var app = express();
 
  =============================================== */
@@ -24,8 +24,8 @@ declare module Express {
 
 
 declare module "express" {
-    import * as http from "http";
-    import * as serveStatic from "serve-static";
+    import http = require('http');
+    import serveStatic = require('serve-static');
 
     function e(): e.Express;
 
@@ -40,7 +40,6 @@ declare module "express" {
             delete(...handler: RequestHandler[]): IRoute;
             patch(...handler: RequestHandler[]): IRoute;
             options(...handler: RequestHandler[]): IRoute;
-            head(...handler: RequestHandler[]): IRoute;
         }
 
         interface IRouterMatcher<T> {
@@ -98,7 +97,6 @@ declare module "express" {
             delete: IRouterMatcher<T>;
             patch: IRouterMatcher<T>;
             options: IRouterMatcher<T>;
-            head: IRouterMatcher<T>;
 
             route(path: string): IRoute;
 
@@ -106,8 +104,6 @@ declare module "express" {
             use(handler: ErrorRequestHandler): T;
             use(path: string, ...handler: RequestHandler[]): T;
             use(path: string, handler: ErrorRequestHandler): T;
-            use(path: string[], ...handler: RequestHandler[]): T;
-            use(path: string[], handler: ErrorRequestHandler): T;
         }
 
         export function Router(options?: any): Router;
@@ -412,10 +408,6 @@ declare module "express" {
             originalUrl: string;
 
             url: string;
-            
-            baseUrl: string;
-            
-            app: Application;
         }
 
         interface MediaType {

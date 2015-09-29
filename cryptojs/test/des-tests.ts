@@ -74,7 +74,7 @@ YUI.add('algo-des-test', function (Y) {
             var expectedKey = key.toString();
             var expectedIv = iv.toString();
 
-            C.DES.encrypt(message, key, { iv });
+            C.DES.encrypt(message, key, { iv: iv });
 
             Y.Assert.areEqual(expectedMessage, message.toString());
             Y.Assert.areEqual(expectedKey, key.toString());

@@ -11,7 +11,3 @@ str = findup(['foo', 'bar']);
 str = findup('foo', {
 	debug: true
 });
-
-str = findup('foo', {
-	cwd: "c:\\"
-});

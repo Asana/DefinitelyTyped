@@ -1,4 +1,4 @@
-/// <reference path="resemblejs.d.ts" />
+/// <reference path="resemble.d.ts" />
 
 resemble.outputSettings({
   errorColor: {
@@ -14,7 +14,7 @@ resemble.outputSettings({
 resemble("images/image.png").onComplete(function(data) {
   var r: number = data.red;
   var g: number = data.green;
-  var b: number = data.blue;
+  var b: number = data.blue;  
   var brightness: number = data.brightness;
 });
 
@@ -31,3 +31,4 @@ resemble("images/image2.png").compareTo("images/image2.png")
   var diffImageDataUrl: string = data.getImageDataUrl();
   var difference: number = data.misMatchPercentage;
 });
+

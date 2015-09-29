@@ -58,7 +58,7 @@ YUI.add('algo-tripledes-test', function (Y) {
             var expectedKey = key.toString();
             var expectedIv = iv.toString();
 
-            C.TripleDES.encrypt(message, key, { iv });
+            C.TripleDES.encrypt(message, key, { iv: iv });
 
             Y.Assert.areEqual(expectedMessage, message.toString());
             Y.Assert.areEqual(expectedKey, key.toString());

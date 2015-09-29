@@ -1,5 +1,3 @@
-/// <reference path="./q-retry.d.ts" />
-
 ﻿import Q = require('q-retry');
 
 Q
@@ -11,7 +9,7 @@ Q
         return 0;
     })
     .retry(num => {
-        num.toFixed;
+        num.toFixed;    
     })
     .retry(() => {
 
@@ -34,7 +32,7 @@ Q
         limit: 10,
         interval: 1000,
         maxInterval: 20000,
-        intervalMultiplier: 1.5
+        intervalMultiplier: 1.5    
     })
     .then(str => {
         str.charAt;

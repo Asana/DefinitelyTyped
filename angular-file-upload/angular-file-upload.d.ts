@@ -3,6 +3,30 @@
 // Definitions by: John Reilly <https://github.com/johnnyreilly>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-/// <reference path="../ng-file-upload/ng-file-upload.d.ts" />
+/// <reference path="../angularjs/angular.d.ts" />
 
-// THIS FILE WILL REMOVE IF angular-file-upload.d.ts incoming.
+declare module angular.angularFileUpload  {
+
+    interface IUploadService {
+
+        http<T>(config: IRequestConfig): IUploadPromise<T>;
+        upload<T>(config: IFileUploadConfig): IUploadPromise<T>;
+    }
+
+    interface IUploadPromise<T> extends IHttpPromise<T> {
+        abort(): IUploadPromise<T>;
+        progress(callback: IHttpPromiseCallback<T>): IUploadPromise<T>;
+        xhr(callback: IHttpPromiseCallback<T>): IUploadPromise<T>;
+    }
+
+    interface IFileUploadConfig extends IRequestConfig {
+
+        file: File;
+        fileName?: string;
+    }
+
+    interface IFileProgressEvent extends ProgressEvent {
+
+        config: IFileUploadConfig;
+    }
+} 

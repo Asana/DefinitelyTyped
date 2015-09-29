@@ -7,7 +7,6 @@
 /// <reference path="../gulp/gulp.d.ts" />
 
 declare module "gulp-tsd" {
-    import gulp = require('gulp');
 
     interface IOptions {
         command?: string;
@@ -16,7 +15,7 @@ declare module "gulp-tsd" {
         opts?: Object;
     }
 
-    function tsd(opts?: IOptions, callback?: gulp.TaskCallback): NodeJS.ReadWriteStream;
+    function tsd(opts?: IOptions, callback?: gulp.ITaskCallback): NodeJS.ReadWriteStream;
 
     export = tsd;
 }

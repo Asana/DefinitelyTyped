@@ -925,7 +925,7 @@ declare module createjs {
         static framerate: number;
         static interval: number;
         static maxDelta: number;
-        static paused: boolean;
+        static paused: number;
         static RAF: string;
         static RAF_SYNCHED: string;
         static TIMEOUT: string;

@@ -1,4 +1,4 @@
-// Type definitions for Bootstrap 3.3.5
+// Type definitions for Bootstrap 2.2
 // Project: http://twitter.github.com/bootstrap/
 // Definitions by: Boris Yankov <https://github.com/borisyankov/>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
@@ -27,28 +27,24 @@ interface ScrollSpyOptions {
 interface TooltipOptions {
     animation?: boolean;
     html?: boolean;
-    placement?: string | Function;
+    placement?: any;
     selector?: string;
-    title?: string | Function;
+    title?: any;
     trigger?: string;
-    template?: string;
-    delay?: number | Object;
-    container?: string | boolean;
-    viewport?: string | Function | Object;
+    delay?: any;
+    container?: any;
 }
 
 interface PopoverOptions {
     animation?: boolean;
     html?: boolean;
-    placement?: string | Function;
+    placement?: any;
     selector?: string;
     trigger?: string;
-    title?: string | Function;
-    template?: string;
+    title?: any;
     content?: any;
-    delay?: number | Object;
-    container?: string | boolean;
-    viewport?: string | Function | Object;
+    delay?: any;
+    container?: any;
 }
 
 interface CollapseOptions {
@@ -59,8 +55,6 @@ interface CollapseOptions {
 interface CarouselOptions {
     interval?: number;
     pause?: string;
-    wrap?: boolean;
-    keybord?: boolean;
 }
 
 interface TypeaheadOptions {
@@ -74,8 +68,7 @@ interface TypeaheadOptions {
 }
 
 interface AffixOptions {
-    offset?: number | Function | Object;
-    target?: any;
+    offset?: any;
 }
 
 interface JQuery {

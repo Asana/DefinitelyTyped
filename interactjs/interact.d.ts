@@ -55,7 +55,6 @@ declare module Interact {
         origin(newValue: HTMLElement): Interactable;
         origin(newValue: SVGElement): Interactable;
         origin(newValue: Point): Interactable;
-        preventDefault(newValue: boolean | string): Interactable;
         rectChecker(): Function;
         rectChecker(newValue: Function): Interactable;
         resizable(): Interactable;

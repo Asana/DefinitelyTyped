@@ -456,8 +456,4 @@ moment.locale('en', {
     }
 });
 
-moment.fn.toJSON = function() {
-    return this.format();
-};
-
 console.log(moment.version);

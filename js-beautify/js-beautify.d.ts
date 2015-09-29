@@ -9,7 +9,7 @@ declare var js_beautify: {
         indent_char?: string;
         eol?: string;
         indent_level?: number;
-        indent_with_tabs?: boolean;
+        indent_width_tabs?: boolean;
         preserve_newlines?: boolean;
         max_preserve_newlines?: number;
         jslint_happy: boolean;

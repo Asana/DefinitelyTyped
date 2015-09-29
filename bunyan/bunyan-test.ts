@@ -1,6 +1,6 @@
 /// <reference path="bunyan.d.ts" />
 
-import * as bunyan from 'bunyan';
+import bunyan = require('bunyan');
 
 var ringBufferOptions:bunyan.RingBufferOptions = {
     limit: 100
@@ -40,9 +40,7 @@ var options:bunyan.LoggerOptions = {
         type: 'rotating-file',
         path: '/tmp/test2.log',
         level: bunyan.INFO,
-        closeOnExit: false,
-        period: '1d',
-        count: 3
+        closeOnExit: false
     }, {
         type: 'raw',
         stream: process.stderr,

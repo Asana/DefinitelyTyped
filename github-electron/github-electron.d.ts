@@ -357,10 +357,6 @@ declare module GitHubElectron {
 		 */
 		closeDevTools(): void;
 		/**
-		 * Returns whether the developer tools are opened.
-		 */
-		isDevToolsOpened(): boolean;
-		/**
 		 * Toggle the developer tools.
 		 */
 		toggleDevTools(): void;
@@ -381,29 +377,21 @@ declare module GitHubElectron {
 		capturePage(rect: Rectangle, callback: (image: NativeImage) => void): void;
 		capturePage(callback: (image: NativeImage) => void): void;
 		/**
-		 * Same with webContents.print([options])
+		 * Prints the window's web page. Calling window.print() in a web page is
+		 * equivalent to calling BrowserWindow.print({silent: false, printBackground: false}).
 		 */
 		print(options?: {
+			/**
+			 * When false, Electron will pick up system's default printer and default
+			 * settings for printing.
+			 */
 			silent?: boolean;
 			printBackground?: boolean;
 		}): void;
 		/**
-		 * Same with webContents.printToPDF([options])
-		 */
-		printToPDF(options: {
-			marginsType?: number;
-			pageSize?: string;
-			printBackground?: boolean;
-			printSelectionOnly?: boolean;
-			landscape?: boolean;
-		}, callback: (error: Error, data: Buffer) => void): void;
-		/**
 		 * Same with webContents.loadUrl(url).
 		 */
-		loadUrl(url: string, options?: {
-			httpReferrer?: string;
-			userAgent?: string;
-		}): void;
+		loadUrl(url: string): void;
 		/**
 		 * Same with webContents.reload.
 		 */
@@ -540,10 +528,7 @@ declare module GitHubElectron {
 		 * Loads the url in the window.
 		 * @param url Must contain the protocol prefix (e.g., the http:// or file://).
 		 */
-		loadUrl(url: string, options?: {
-			httpReferrer?: string;
-			userAgent?: string;
-		}): void;
+		loadUrl(url: string): void;
 		/**
 		 * @returns The URL of current web page.
 		 */
@@ -674,62 +659,6 @@ declare module GitHubElectron {
 			 * @param isFulfilled Whether the JS promise is fulfilled.
 			 */
 			(isFulfilled: boolean) => void): void;
-		/**
-		 *
-		 * Prints window's web page. When silent is set to false, Electron will pick up system's default printer and default settings for printing.
-		 * Calling window.print() in web page is equivalent to call WebContents.print({silent: false, printBackground: false}).
-		 * Note:
-		 *   On Windows, the print API relies on pdf.dll. If your application doesn't need print feature, you can safely remove pdf.dll in saving binary size.
-		 */
-		print(options?: {
-			/**
-			 *  Don't ask user for print settings, defaults to false
-			 */
-			silent?: boolean;
-			/**
-			 * Also prints the background color and image of the web page, defaults to false.
-			 */
-			printBackground: boolean;
-		}): void;
-		/**
-		 * Prints windows' web page as PDF with Chromium's preview printing custom settings.
-		 */
-		printToPDF(options: {
-			/**
-			 * Specify the type of margins to use. Default is 0.
-			 *   0 - default
-			 *   1 - none
-			 *   2 - minimum
-			 */
-			marginsType?: number;
-			/**
-			 * String - Specify page size of the generated PDF. Default is A4.
-			 *   A4
-			 *   A3
-			 *   Legal
-			 *   Letter
-			 *   Tabloid
-			 */
-			pageSize?: string;
-			/**
-			 * Whether to print CSS backgrounds. Default is false.
-			 */
-			printBackground?: boolean;
-			/**
-			 * Whether to print selection only. Default is false.
-			 */
-			printSelectionOnly?: boolean;
-			/**
-			 * true for landscape, false for portrait.  Default is false.
-			 */
-			landscape?: boolean;
-		},
-		/**
-		 * Callback function on completed converting to PDF.
-		 *   error Error
-		 *   data Buffer - PDF file content
-		 */
-		callback: (error: Error, data: Buffer) => void): void;
 		/**
 		 * Send args.. to the web page via channel in asynchronous message, the web page
 		 * can handle it by listening to the channel event of ipc module.
@@ -926,10 +855,6 @@ declare module GitHubElectron {
 		 * cleanup code will not run.
 		 */
 		terminate(): void;
-		/**
-		 * Returns the current application directory.
-		 */
-		getAppPath(): string;
 		/**
 		 * @param name One of: home, appData, userData, cache, userCache, temp, userDesktop, exe, module
 		 * @returns The path to a special directory or file associated with name.
@@ -1218,7 +1143,7 @@ declare module GitHubElectron {
 		/**
 		 * Sets the image associated with this tray icon.
 		 */
-		setImage(image: NativeImage|string): void;
+		setImage(image: NativeImage): void;
 		/**
 		 * Sets the image associated with this tray icon when pressed.
 		 */

@@ -19,13 +19,6 @@ declare module JQueryNotifyBar {
         delay?: number;
 
         /**
-         * How long this bar will be slided up and down.
-         *
-         * Default: "normal"
-         */
-        animationSpeed?: string | number;
-
-        /**
          * Custom jQuery object for notify bar.
          */
         jqObject?: JQuery;

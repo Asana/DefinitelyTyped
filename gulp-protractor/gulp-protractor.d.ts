@@ -7,8 +7,6 @@
 /// <reference path="../gulp/gulp.d.ts" />
 
 declare module 'gulp-protractor' {
-    import gulp = require('gulp');
-
     interface IOptions {
         configFile?: string;
         args?: Array<string>;
@@ -18,8 +16,8 @@ declare module 'gulp-protractor' {
     interface IGulpProtractor {
         getProtractorDir(): string;
         protractor(options?: IOptions): NodeJS.ReadWriteStream;
-        webdriver_standalone: gulp.TaskCallback;
-        webdriver_update: gulp.TaskCallback;
+        webdriver_standalone: gulp.ITaskCallback;
+        webdriver_update: gulp.ITaskCallback;
     }
 
     var protractor: IGulpProtractor;

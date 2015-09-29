@@ -577,16 +577,17 @@ describe('irreducible types constructors', function () {
     {T: Dat, x: new Date()}
   ].forEach(function (o) {
 
-    var { T, x } = o;
+    var T = o.T;
+    var x = o.x;
 
     it('should accept only valid values', function () {
-      eq((<any>T)(x), x);
+      eq(T(x), x);
     });
 
     it('should throw if used with new', function () {
       throwsWithMessage(function () {
         /* jshint ignore:start */
-        var x = new (<any>T) ();
+        var x = new    (<any>T) ();
         /* jshint ignore:end */
       }, 'Operator `new` is forbidden for type `' + getTypeName(T) + '`');
     });

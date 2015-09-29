@@ -161,7 +161,7 @@ interface CheckboxRadioOptions {
 }
 
 interface CheckboxRadioEvents {
-    create?: JQueryMobileEvent;
+    createp?: JQueryMobileEvent;
 }
 
 interface SelectMenuOptions {
@@ -171,7 +171,6 @@ interface SelectMenuOptions {
     iconshadow?: boolean;
     initSelector?: string;
     inline?: boolean;
-    hidePlaceholderMenuItems: boolean;
     mini?: boolean;
     nativeMenu?: boolean;
     overlayTheme?: string;
@@ -185,11 +184,7 @@ interface SelectMenuEvents {
 }
 
 interface ListViewOptions {
-    autodividers?: boolean;
-    autodividersSelector?: (jq?: JQuery) => string;
     countTheme?: string;
-    defaults?: boolean;
-    disabled?: boolean;
     dividerTheme?: string;
     filter?: boolean;
     filterCallback?: Function;
@@ -464,8 +459,8 @@ interface JQuery {
     selectmenu(): JQuery;
     selectmenu(command: string): JQuery;
     selectmenu(command: string, update: boolean): JQuery;
-    selectmenu(options: SelectMenuOptions): JQuery;
-    selectmenu(events: SelectMenuEvents): JQuery;
+    selectmenu(options: CheckboxRadioOptions): JQuery;
+    selectmenu(events: CheckboxRadioEvents): JQuery;
 
     listview(): JQuery;
     listview(command: string): JQuery;

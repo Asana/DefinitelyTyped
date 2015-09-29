@@ -276,10 +276,6 @@ declare module Sammy {
 	}
 }
 
-declare module "sammy" {
-    export = Sammy;
-}
-
 interface JQueryStatic {
 	sammy: Sammy.SammyFunc;
 	log: Function;

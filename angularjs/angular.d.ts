@@ -725,9 +725,8 @@ declare module angular {
     // see http://docs.angularjs.org/api/ng.$timeout
     ///////////////////////////////////////////////////////////////////////////
     interface ITimeoutService {
-        (delay?: number, invokeApply?: boolean): IPromise<void>;
-        <T>(fn: (...args: any[]) => T, delay?: number, invokeApply?: boolean, ...args: any[]): IPromise<T>;
-        cancel(promise?: IPromise<any>): boolean;
+        <T>(func: (...args: any[]) => T, delay?: number, invokeApply?: boolean): IPromise<T>;
+        cancel(promise: IPromise<any>): boolean;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -782,23 +781,7 @@ declare module angular {
          *
          * @param name Name of the filter function to retrieve
          */
-        (name: string): IFilterFunc;
-    }
-    
-    interface IFilterFunc {
-        <T>(array: T[], expression: string | IFilterPatternObject | IFilterPredicateFunc<T>, comparator?: IFilterComparatorFunc<T>|boolean): T[];
-    }
-    
-    interface IFilterPatternObject {
-        [name: string]: string;
-    }
-    
-    interface IFilterPredicateFunc<T> {
-        (value: T, index: number, array: T[]): T[];
-    }
-    
-    interface IFilterComparatorFunc<T> {
-        (actual: T, expected: T): boolean;
+        (name: string): Function;
     }
 
     /**
@@ -1015,8 +998,6 @@ declare module angular {
     interface IQService {
         new <T>(resolver: (resolve: IQResolveReject<T>) => any): IPromise<T>;
         new <T>(resolver: (resolve: IQResolveReject<T>, reject: IQResolveReject<any>) => any): IPromise<T>;
-        <T>(resolver: (resolve: IQResolveReject<T>) => any): IPromise<T>;
-        <T>(resolver: (resolve: IQResolveReject<T>, reject: IQResolveReject<any>) => any): IPromise<T>;
 
         /**
          * Combines multiple promises into a single promise that is resolved when all of the input promises are resolved.
@@ -1025,7 +1006,7 @@ declare module angular {
          *
          * @param promises An array of promises.
          */
-        all<T>(promises: IPromise<any>[]): IPromise<T[]>;
+        all(promises: IPromise<any>[]): IPromise<any[]>;
         /**
          * Combines multiple promises into a single promise that is resolved when all of the input promises are resolved.
          *
@@ -1034,7 +1015,6 @@ declare module angular {
          * @param promises A hash of promises.
          */
         all(promises: { [id: string]: IPromise<any>; }): IPromise<{ [id: string]: any; }>;
-        all<T extends {}>(promises: { [id: string]: IPromise<any>; }): IPromise<T>;
         /**
          * Creates a Deferred object which represents a task which will finish in the future.
          */
@@ -1079,7 +1059,7 @@ declare module angular {
          *
          * Because finally is a reserved word in JavaScript and reserved keywords are not supported as property names by ES3, you'll need to invoke the method like promise['finally'](callback) to make your code IE8 and Android 2.x compatible.
          */
-        finally(finallyCallback: () => any): IPromise<T>;
+        finally<TResult>(finallyCallback: () => any): IPromise<TResult>;
     }
 
     interface IDeferred<T> {
@@ -1246,9 +1226,8 @@ declare module angular {
     ///////////////////////////////////////////////////////////////////////////
     interface IControllerService {
         // Although the documentation doesn't state this, locals are optional
-        <T>(controllerConstructor: new (...args: any[]) => T, locals?: any, bindToController?: any): T;
-        <T>(controllerConstructor: Function, locals?: any, bindToController?: any): T;
-        <T>(controllerName: string, locals?: any, bindToController?: any): T;
+        (controllerConstructor: Function, locals?: any, bindToController?: any): any;
+        (controllerName: string, locals?: any, bindToController?: any): any;
     }
 
     interface IControllerProvider extends IServiceProvider {
@@ -1329,24 +1308,50 @@ declare module angular {
         /**
          * Runtime equivalent of the $httpProvider.defaults property. Allows configuration of default headers, withCredentials as well as request and response transformations.
          */
-        defaults: IHttpProviderDefaults;
+        defaults: IRequestConfig;
 
         /**
          * Array of config objects for currently pending requests. This is primarily meant to be used for debugging purposes.
          */
-        pendingRequests: IRequestConfig[];
+        pendingRequests: any[];
     }
 
     /**
      * Object describing the request to be made and how it should be processed.
      * see http://docs.angularjs.org/api/ng/service/$http#usage
      */
-    interface IRequestShortcutConfig extends IHttpProviderDefaults {
+    interface IRequestShortcutConfig {
         /**
          * {Object.<string|Object>}
          * Map of strings or objects which will be turned to ?key1=value1&key2=value2 after the url. If the value is not a string, it will be JSONified.
          */
         params?: any;
+
+        /**
+         * Map of strings or functions which return strings representing HTTP headers to send to the server. If the return value of a function is null, the header will not be sent.
+         */
+        headers?: any;
+
+        /**
+         * Name of HTTP header to populate with the XSRF token.
+         */
+        xsrfHeaderName?: string;
+
+        /**
+         * Name of cookie containing the XSRF token.
+         */
+        xsrfCookieName?: string;
+
+        /**
+         * {boolean|Cache}
+         * If true, a default $http cache will be used to cache the GET request, otherwise if a cache instance built with $cacheFactory, this cache will be used for caching.
+         */
+        cache?: any;
+
+        /**
+         * whether to to set the withCredentials flag on the XHR object. See [requests with credentials]https://developer.mozilla.org/en/http_access_control#section_5 for more information.
+         */
+        withCredentials?: boolean;
 
         /**
          * {string|Object}
@@ -1355,12 +1360,25 @@ declare module angular {
         data?: any;
 
         /**
-         * Timeout in milliseconds, or promise that should abort the request when resolved.
+         * {function(data, headersGetter)|Array.<function(data, headersGetter)>}
+         * Transform function or an array of such functions. The transform function takes the http request body and headers and returns its transformed (typically serialized) version.
          */
-        timeout?: number|IPromise<any>;
+        transformRequest?: any;
 
         /**
-         * See [XMLHttpRequest.responseType]https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#xmlhttprequest-responsetype
+         * {function(data, headersGetter)|Array.<function(data, headersGetter)>}
+         * Transform function or an array of such functions. The transform function takes the http response body and headers and returns its transformed (typically deserialized) version.
+         */
+        transformResponse?: any;
+
+        /**
+         * {number|Promise}
+         * Timeout in milliseconds, or promise that should abort the request when resolved.
+         */
+        timeout?: any;
+
+        /**
+         * See requestType.
          */
         responseType?: string;
     }
@@ -1403,108 +1421,33 @@ declare module angular {
         then<TResult>(successCallback: (response: IHttpPromiseCallbackArg<T>) => IPromise<TResult>|TResult, errorCallback?: (response: IHttpPromiseCallbackArg<any>) => any): IPromise<TResult>;
     }
 
-    // See the jsdoc for transformData() at https://github.com/angular/angular.js/blob/master/src/ng/http.js#L228
-    interface IHttpResquestTransformer {
-        (data: any, headersGetter: IHttpHeadersGetter): any;
-    }
-
-    // The definition of fields are the same as IHttpPromiseCallbackArg
-    interface IHttpResponseTransformer {
-        (data: any, headersGetter: IHttpHeadersGetter, status: number): any;
-    }
-
-    interface IHttpRequestConfigHeaders {
-        [requestType: string]: string|(() => string);
-        common?: string|(() => string);
-        get?: string|(() => string);
-        post?: string|(() => string);
-        put?: string|(() => string);
-        patch?: string|(() => string);
-    }
-
     /**
-    * Object that controls the defaults for $http provider. Not all fields of IRequestShortcutConfig can be configured
-    * via defaults and the docs do not say which. The following is based on the inspection of the source code.
+    * Object that controls the defaults for $http provider
     * https://docs.angularjs.org/api/ng/service/$http#defaults
-    * https://docs.angularjs.org/api/ng/service/$http#usage
-    * https://docs.angularjs.org/api/ng/provider/$httpProvider The properties section
     */
     interface IHttpProviderDefaults {
-        /**
-         * {boolean|Cache}
-         * If true, a default $http cache will be used to cache the GET request, otherwise if a cache instance built with $cacheFactory, this cache will be used for caching.
-         */
-        cache?: any;
-
+        cache?: boolean;
         /**
          * Transform function or an array of such functions. The transform function takes the http request body and
          * headers and returns its transformed (typically serialized) version.
-         * @see {@link https://docs.angularjs.org/api/ng/service/$http#transforming-requests-and-responses}
          */
-        transformRequest?: IHttpResquestTransformer |IHttpResquestTransformer[];
-
-        /**
-         * Transform function or an array of such functions. The transform function takes the http response body and
-         * headers and returns its transformed (typically deserialized) version.
-         */
-        transformResponse?: IHttpResponseTransformer | IHttpResponseTransformer[];
-
-        /**
-         * Map of strings or functions which return strings representing HTTP headers to send to the server. If the
-         * return value of a function is null, the header will not be sent.
-         * The key of the map is the request verb in lower case. The "common" key applies to all requests.
-         * @see {@link https://docs.angularjs.org/api/ng/service/$http#setting-http-headers}
-         */
-        headers?: IHttpRequestConfigHeaders;
-
-        /** Name of HTTP header to populate with the XSRF token. */
-        xsrfHeaderName?: string;
-
-        /** Name of cookie containing the XSRF token. */
+        transformRequest?: ((data: any, headersGetter?: any) => any)|((data: any, headersGetter?: any) => any)[];
         xsrfCookieName?: string;
-
-        /**
-         * whether to to set the withCredentials flag on the XHR object. See [requests with credentials]https://developer.mozilla.org/en/http_access_control#section_5 for more information.
-         */
+        xsrfHeaderName?: string;
         withCredentials?: boolean;
-
-        /**
-        * A function used to the prepare string representation of request parameters (specified as an object). If
-        * specified as string, it is interpreted as a function registered with the $injector. Defaults to
-        * $httpParamSerializer.
-        */
-        paramSerializer?: string | ((obj: any) => string);
-    }
-
-    interface IHttpInterceptor {
-        request?: (config: IRequestConfig) => IRequestConfig|IPromise<IRequestConfig>;
-        requestError?: (rejection: any) => any;
-        response?: <T>(response: IHttpPromiseCallbackArg<T>) => IPromise<T>|T;
-        responseError?: (rejection: any) => any;
-    }
-
-    interface IHttpInterceptorFactory {
-        (...args: any[]): IHttpInterceptor;
+        headers?: {
+            common?: any;
+            post?: any;
+            put?: any;
+            patch?: any;
+        }
     }
 
     interface IHttpProvider extends IServiceProvider {
         defaults: IHttpProviderDefaults;
-
-        /**
-         * Register service factories (names or implementations) for interceptors which are called before and after
-         * each request.
-         */
-        interceptors: (string|IHttpInterceptorFactory|(string|IHttpInterceptorFactory)[])[];
+        interceptors: any[];
         useApplyAsync(): boolean;
         useApplyAsync(value: boolean): IHttpProvider;
-
-        /**
-         *
-         * @param {boolean=} value If true, `$http` will return a normal promise without the `success` and `error` methods.
-         * @returns {boolean|Object} If a value is specified, returns the $httpProvider for chaining.
-         *    otherwise, returns the current configured value.
-         */
-        useLegacyPromiseExtensions(value:boolean) : boolean | IHttpProvider;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -1714,6 +1657,18 @@ declare module angular {
         inheritedData(key?: string): any;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    // AnimateService
+    // see http://docs.angularjs.org/api/ng.$animate
+    ///////////////////////////////////////////////////////////////////////
+    interface IAnimateService {
+        addClass(element: JQuery, className: string, done?: Function): IPromise<any>;
+        enter(element: JQuery, parent: JQuery, after: JQuery, done?: Function): void;
+        leave(element: JQuery, done?: Function): void;
+        move(element: JQuery, parent: JQuery, after: JQuery, done?: Function): void;
+        removeClass(element: JQuery, className: string, done?: Function): void;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // AUTO module (angular.js)
     ///////////////////////////////////////////////////////////////////////////
@@ -1726,7 +1681,7 @@ declare module angular {
         interface IInjectorService {
             annotate(fn: Function): string[];
             annotate(inlineAnnotatedFunction: any[]): string[];
-            get<T>(name: string, caller?: string): T;
+            get<T>(name: string): T;
             has(name: string): boolean;
             instantiate<T>(typeConstructor: Function, locals?: any): T;
             invoke(inlineAnnotatedFunction: any[]): any;

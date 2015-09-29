@@ -29,7 +29,6 @@ interface amplifyDecoders {
 
 interface amplifyAjaxSettings extends JQueryAjaxSettings  {
     cache?: any;
-    dataMap?: {} | ((data: any) => {});
     decoder?: any /* string or amplifyDecoder */;
 }
 

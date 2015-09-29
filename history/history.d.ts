@@ -5,23 +5,23 @@
 
 
 interface HistoryAdapter {
-    bind(element: any, event: string, callback: () => void): void;
-    trigger(element: any, event: string): void;
-    onDomLoad(callback: () => void): void;
+    bind(element: any, event: string, callback: () => void);
+    trigger(element: any, event: string);
+    onDomLoad(callback: () => void);
 }
 
-// Since History is defined in lib.d.ts as well
+// Since History is defined in lib.d.ts as well 
 // the name for our interfaces was chosen to be Historyjs
 // However at runtime you would need to do
-// https://github.com/borisyankov/DefinitelyTyped/issues/277
+// https://github.com/borisyankov/DefinitelyTyped/issues/277 
 // var Historyjs: Historyjs = <any>History;
 
 interface Historyjs {
 
     enabled: boolean;
 
-    pushState(data: any, title: string, url: string): void;
-    replaceState(data: any, title: string, url: string): void;
+    pushState(data: any, title: string, url: string);
+    replaceState(data: any, title: string, url: string);
     getState(): HistoryState;
     getStateByIndex(index: number): HistoryState;
     getCurrentIndex(): number;
