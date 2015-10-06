@@ -90,11 +90,15 @@ declare module MakerJs {
         /**
          * The type of the path, e.g. "line", "circle", or "arc". These strings are enumerated in pathType.
          */
-        type: string;
+        "type": string;
         /**
          * The main point of reference for this path.
          */
         origin: IPoint;
+        /**
+         * Optional layer of this path.
+         */
+        layer?: string;
     }
     /**
      * Test to see if an object implements the required properties of a path.
@@ -187,7 +191,7 @@ declare module MakerJs {
         /**
          * Key is the type of a path, value is a function which accepts a path object a point object as its parameters.
          */
-        [type: string]: (id: string, pathValue: IPath, origin: IPoint) => void;
+        [type: string]: (id: string, pathValue: IPath, origin: IPoint, layer: string) => void;
     }
     /**
      * String-based enumeration of all paths types.
@@ -270,7 +274,7 @@ declare module MakerJs {
         /**
          * A model may want to specify its type, but this value is not employed yet.
          */
-        type?: string;
+        "type"?: string;
         /**
          * Optional array of path objects in this model.
          */
@@ -287,6 +291,10 @@ declare module MakerJs {
          * An author may wish to add notes to this model instance.
          */
         notes?: string;
+        /**
+         * Optional layer of this model.
+         */
+        layer?: string;
     }
     /**
      * Test to see if an object implements the required properties of a model.
@@ -781,7 +789,7 @@ declare module MakerJs.exporter {
          * @param pathToExport The path to export.
          * @param offset The offset position of the path.
          */
-        exportPath(id: string, pathToExport: IPath, offset: IPoint): void;
+        exportPath(id: string, pathToExport: IPath, offset: IPoint, layer: string): void;
         /**
          * Export a model.
          *

@@ -221,89 +221,22 @@ declare module React {
     // Event System
     // ----------------------------------------------------------------------
 
-    interface SyntheticEvent {
-        bubbles: boolean;
-        cancelable: boolean;
-        currentTarget: EventTarget;
-        defaultPrevented: boolean;
-        eventPhase: number;
-        isTrusted: boolean;
-        nativeEvent: Event;
-        preventDefault(): void;
-        stopPropagation(): void;
-        target: EventTarget;
-        timeStamp: Date;
-        type: string;
+    interface UpdateSpecCommand {
+        $set?: any;
+        $merge?: {};
+        $apply?(value: any): any;
     }
 
-    interface DragEvent extends SyntheticEvent {
-        dataTransfer: DataTransfer;
+    interface UpdateSpecPath {
+        [key: string]: UpdateSpec;
     }
 
-    interface ClipboardEvent extends SyntheticEvent {
-        clipboardData: DataTransfer;
-    }
+    type UpdateSpec = UpdateSpecCommand | UpdateSpecPath;
 
-    interface KeyboardEvent extends SyntheticEvent {
-        altKey: boolean;
-        charCode: number;
-        ctrlKey: boolean;
-        getModifierState(key: string): boolean;
-        key: string;
-        keyCode: number;
-        locale: string;
-        location: number;
-        metaKey: boolean;
-        repeat: boolean;
-        shiftKey: boolean;
-        which: number;
-    }
-
-    interface FocusEvent extends SyntheticEvent {
-        relatedTarget: EventTarget;
-    }
-
-    interface FormEvent extends SyntheticEvent {
-    }
-
-    interface MouseEvent extends SyntheticEvent {
-        altKey: boolean;
-        button: number;
-        buttons: number;
-        clientX: number;
-        clientY: number;
-        ctrlKey: boolean;
-        getModifierState(key: string): boolean;
-        metaKey: boolean;
-        pageX: number;
-        pageY: number;
-        relatedTarget: EventTarget;
-        screenX: number;
-        screenY: number;
-        shiftKey: boolean;
-    }
-
-    interface TouchEvent extends SyntheticEvent {
-        altKey: boolean;
-        changedTouches: TouchList;
-        ctrlKey: boolean;
-        getModifierState(key: string): boolean;
-        metaKey: boolean;
-        shiftKey: boolean;
-        targetTouches: TouchList;
-        touches: TouchList;
-    }
-
-    interface UIEvent extends SyntheticEvent {
-        detail: number;
-        view: AbstractView;
-    }
-
-    interface WheelEvent extends SyntheticEvent {
-        deltaMode: number;
-        deltaX: number;
-        deltaY: number;
-        deltaZ: number;
+    interface UpdateArraySpec extends UpdateSpecCommand {
+        $push?: any[];
+        $unshift?: any[];
+        $splice?: any[][];
     }
 
     //

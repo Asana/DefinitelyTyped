@@ -251,6 +251,7 @@ declare module Sinon {
         fakeHTTPMethods: boolean;
         getHTTPMethod: (request: SinonFakeXMLHttpRequest) => string;
         requests: SinonFakeXMLHttpRequest[];
+        respondImmediately: boolean;
 
         // Methods
         respondWith(body: string): void;

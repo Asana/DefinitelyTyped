@@ -9,7 +9,7 @@ function testSourceMapConsumer() {
             version: 'foo',
             sources: ['foo', 'bar'],
             names: ['foo', 'bar'],
-            sourcesContent: 'foo',
+            sourcesContent: ['foo'],
             mappings: 'foo'
         });
 

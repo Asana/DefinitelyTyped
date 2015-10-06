@@ -27,6 +27,9 @@ function test_fetchUrl() {
 
 function handlePromise(promise: Promise<Response>) {
 	promise.then((response) => {
+		if (response.type === 'basic') {
+			// for test only
+		}
 		return response.text();
 	}).then((text) => {
 		console.log(text);

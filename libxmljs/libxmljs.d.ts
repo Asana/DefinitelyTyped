@@ -33,8 +33,8 @@ declare module "libxmljs" {
         name():string;
         name(newName:string):void;
         text():string;
-        attr(name:string):string;
-        attr(attr:Attribute);
+        attr(name:string):Attribute;
+        attr(attr:Attribute):void;
         attr(attrObject:{[key:string]:string;}):void;
         attrs():Attribute[];
         parent():Element;
@@ -50,9 +50,10 @@ declare module "libxmljs" {
         addPrevSibling(siblingNode:Element);
         find(xpath:string):Element[];
         find(xpath:string, ns_uri:string):Element[];
-        get(xpath:string, ns_uri:string):Element;
         find(xpath:string, namespaces:{[key:string]:string;}):Element[];
-        get(xpath, ns_uri:{[key:string]:string;}):Element;
+        get(xpath:string):Element;
+        get(xpath:string, ns_uri:string):Element;
+        get(xpath:string, ns_uri:{[key:string]:string;}):Element;
         defineNamespace(href:string):Namespace;
         defineNamespace(prefix:string, href:string):Namespace;
         namespace():Namespace;
