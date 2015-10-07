@@ -169,6 +169,42 @@ module TestCompact {
 result = <number[]>_.difference([1, 2, 3, 4, 5], [5, 2, 10]);
 result = <_.LoDashArrayWrapper<number>>_([1, 2, 3, 4, 5]).difference([5, 2, 10]);
 
+// _.dropWhile
+module TestDropWhile {
+    let array: TResult[];
+    let list: _.List<TResult>;
+    let predicateFn: (value: TResult, index: number, collection: _.List<TResult>) => boolean;
+    let result: TResult[];
+
+    result = _.dropWhile<TResult>(array);
+    result = _.dropWhile<TResult>(array, predicateFn);
+    result = _.dropWhile<TResult>(array, predicateFn, any);
+    result = _.dropWhile<TResult>(array, '')
+    result = _.dropWhile<TResult>(array, '', any);
+    result = _.dropWhile<{a: number;}, TResult>(array, {a: 42});
+
+    result = _.dropWhile<TResult>(list);
+    result = _.dropWhile<TResult>(list, predicateFn);
+    result = _.dropWhile<TResult>(list, predicateFn, any);
+    result = _.dropWhile<TResult>(list, '')
+    result = _.dropWhile<TResult>(list, '', any);
+    result = _.dropWhile<{a: number;}, TResult>(list, {a: 42});
+
+    result = _(array).dropWhile().value();
+    result = _(array).dropWhile(predicateFn).value();
+    result = _(array).dropWhile(predicateFn, any).value();
+    result = _(array).dropWhile('').value();
+    result = _(array).dropWhile('', any).value();
+    result = _(array).dropWhile<{a: number;}>({a: 42}).value();
+
+    result = _(list).dropWhile<TResult>().value();
+    result = _(list).dropWhile<TResult>(predicateFn).value();
+    result = _(list).dropWhile<TResult>(predicateFn, any).value();
+    result = _(list).dropWhile<TResult>('').value();
+    result = _(list).dropWhile<TResult>('', any).value();
+    result = _(list).dropWhile<{a: number;}, TResult>({a: 42}).value();
+}
+
 result = <number[]>_.rest([1, 2, 3]);
 result = <number[]>_.rest([1, 2, 3], 2);
 result = <number[]>_.rest([1, 2, 3], (num) => num < 3)
@@ -283,16 +319,6 @@ result = <number[]>_([1, 2, 3]).first(function (num) {
 }).value();
 result = <IFoodOrganic[]>_(foodsOrganic).first('organic').value();
 result = <IFoodType[]>_(foodsType).first({ 'type': 'fruit' }).value();
-
-result = <number[]>_.takeWhile([1, 2, 3], (num) => num < 3);
-result = <boolean[]>_.takeWhile(foodsOrganic, 'organic');
-result = <IFoodType[]>_.takeWhile(foodsType, { 'type': 'fruit' });
-
-result = <number[]>_([1, 2, 3]).takeWhile(function (num) {
-    return num < 3;
-}).value();
-result = <IFoodOrganic[]>_(foodsOrganic).take('organic').value();
-result = <IFoodType[]>_(foodsType).take({ 'type': 'fruit' }).value();
 
 result = <Array<number>>_.flatten([[1, 2], [3, 4]]);
 result = <Array<number>>_.flatten([[1, 2], [3, 4], 5, 6]);
@@ -509,6 +535,42 @@ module TestTakeRightWhile {
     result = _(list).takeRightWhile<TResult>('').value();
     result = _(list).takeRightWhile<TResult>('', any).value();
     result = _(list).takeRightWhile<{a: number;}, TResult>({a: 42}).value();
+}
+
+// _.takeWhile
+module TestTakeWhile {
+    let array: TResult[];
+    let list: _.List<TResult>;
+    let predicateFn: (value: TResult, index: number, collection: _.List<TResult>) => boolean;
+    let result: TResult[];
+
+    result = _.takeWhile<TResult>(array);
+    result = _.takeWhile<TResult>(array, predicateFn);
+    result = _.takeWhile<TResult>(array, predicateFn, any);
+    result = _.takeWhile<TResult>(array, '')
+    result = _.takeWhile<TResult>(array, '', any);
+    result = _.takeWhile<{a: number;}, TResult>(array, {a: 42});
+
+    result = _.takeWhile<TResult>(list);
+    result = _.takeWhile<TResult>(list, predicateFn);
+    result = _.takeWhile<TResult>(list, predicateFn, any);
+    result = _.takeWhile<TResult>(list, '')
+    result = _.takeWhile<TResult>(list, '', any);
+    result = _.takeWhile<{a: number;}, TResult>(list, {a: 42});
+
+    result = _(array).takeWhile().value();
+    result = _(array).takeWhile(predicateFn).value();
+    result = _(array).takeWhile(predicateFn, any).value();
+    result = _(array).takeWhile('').value();
+    result = _(array).takeWhile('', any).value();
+    result = _(array).takeWhile<{a: number;}>({a: 42}).value();
+
+    result = _(list).takeWhile<TResult>().value();
+    result = _(list).takeWhile<TResult>(predicateFn).value();
+    result = _(list).takeWhile<TResult>(predicateFn, any).value();
+    result = _(list).takeWhile<TResult>('').value();
+    result = _(list).takeWhile<TResult>('', any).value();
+    result = _(list).takeWhile<{a: number;}, TResult>({a: 42}).value();
 }
 
 result = <number[]>_.union([1, 2, 3], [101, 2, 1, 10], [2, 1]);

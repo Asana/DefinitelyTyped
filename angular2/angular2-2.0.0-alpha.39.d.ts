@@ -26,16 +26,30 @@
 ///<reference path="../es6-shim/es6-shim.d.ts"/>
 
 
-interface List<T> extends Array<T> {}
 interface Map<K,V> {}
 
-declare module ng {
-  type SetterFn = typeof Function;
-  type int = number;
-  interface Type extends Function {
-    new (...args: any[]): any;
-  }
 
+declare module ng {
+  // See https://github.com/Microsoft/TypeScript/issues/1168
+  class BaseException /* extends Error */ {
+    message: string;
+    stack: string;
+    toString(): string;
+  }
+  interface InjectableReference {}
+}
+
+declare module ngWorker {
+  // See https://github.com/Microsoft/TypeScript/issues/1168
+  class BaseException /* extends Error */ {
+    message: string;
+    stack: string;
+    toString(): string;
+  }
+  interface InjectableReference {}
+}
+
+declare module ngUi {
   // See https://github.com/Microsoft/TypeScript/issues/1168
   class BaseException /* extends Error */ {
     message: string;
@@ -464,8 +478,7 @@ declare module ng {
      * propagating the component's bindings.
      * 
      * The `changeDetection` property defines, whether the change detection will be checked every time
-     * or only when the component
-     * tells it to do so.
+     * or only when the component tells it to do so.
      */
     changeDetection: ChangeDetectionStrategy;
     
@@ -496,7 +509,7 @@ declare module ng {
      * 
      * @Component({
      *   selector: 'greet',
-     *   viewInjector: [
+     *   viewBindings: [
      *     Greeter
      *   ]
      * })
@@ -564,11 +577,9 @@ declare module ng {
    * 
    * To inject other directives, declare the constructor parameter as:
    * - `directive:DirectiveType`: a directive on the current element only
-   * - `@Ancestor() directive:DirectiveType`: any directive that matches the type between the current
+   * - `@Host() directive:DirectiveType`: any directive that matches the type between the current
    * element and the
-   *    Shadow DOM root. Current element is not included in the resolution, therefore even if it could
-   * resolve it, it will
-   *    be ignored.
+   *    Shadow DOM root.
    * - `@Query(DirectiveType) query:QueryList<DirectiveType>`: A live collection of direct child
    * directives.
    * - `@QueryDescendants(DirectiveType) query:QueryList<DirectiveType>`: A live collection of any
@@ -577,7 +588,7 @@ declare module ng {
    * To inject element-specific special objects, declare the constructor parameter as:
    * - `element: ElementRef` to obtain a reference to logical element in the view.
    * - `viewContainer: ViewContainerRef` to control child template instantiation, for
-   * {@link Directive} directives only
+   * {@link DirectiveMetadata} directives only
    * - `bindingPropagation: BindingPropagation` to control change detection in a more granular way.
    * 
    * ## Example
@@ -675,15 +686,12 @@ declare module ng {
    * ### Injecting a directive from any ancestor elements
    * 
    * Directives can inject other directives declared on any ancestor element (in the current Shadow
-   * DOM), i.e. on the
-   * parent element and its parents. By definition, a directive with an `@Ancestor` annotation does
-   * not attempt to
-   * resolve dependencies for the current element, even if this would satisfy the dependency.
-   * 
+   * DOM), i.e. on the current element, the
+   * parent element, or its parents.
    * ```
    * @Directive({ selector: '[my-directive]' })
    * class MyDirective {
-   *   constructor(@Ancestor() dependency: Dependency) {
+   *   constructor(@Host() dependency: Dependency) {
    *     expect(dependency.id).toEqual(2);
    *   }
    * }
@@ -762,9 +770,9 @@ declare module ng {
    *   inputs: [
    *     'text: tooltip'
    *   ],
-   *   hostListeners: {
-   *     'onmouseenter': 'onMouseEnter()',
-   *     'onmouseleave': 'onMouseLeave()'
+   *   host: {
+   *     '(mouseenter)': 'onMouseEnter()',
+   *     '(mouseleave)': 'onMouseLeave()'
    *   }
    * })
    * class Tooltip{
@@ -993,9 +1001,6 @@ declare module ng {
      * 
      * bootstrap(App);
      * ```
-     * 
-     * In this case, the two pipes compose as if they were inlined: `someExpression | somePipe |
-     * keyValDiff`.
      */
     inputs: string[];
     
@@ -1182,7 +1187,7 @@ declare module ng {
      * 
      * @Directive({
      *   selector: 'greet',
-     *   hostInjector: [
+     *   bindings: [
      *     Greeter
      *   ]
      * })
@@ -1599,8 +1604,9 @@ declare module ng {
     
     /**
      * Specify how the template and the styles should be encapsulated.
-     * The default is {@link ViewEncapsulation.EMULATED} if the view has styles,
-     * otherwise {@link ViewEncapsulation.NONE}.
+     * The default is {@link ViewEncapsulation#Emulated `ViewEncapsulation.Emulated`} if the view
+     * has styles,
+     * otherwise {@link ViewEncapsulation#None `ViewEncapsulation.None`}.
      */
     encapsulation: ViewEncapsulation;
     
@@ -1671,7 +1677,6 @@ declare module ng {
       }): ViewDecorator;
     
   }
-  
 
     
   /**
@@ -1806,7 +1811,7 @@ declare module ng {
    * };
    * 
    * MyComponent.annotations = [
-   *   new ng.Component({...})
+   *   new ng.Component({...}),
    *   new ng.View({...})
    * ]
    * ```
@@ -1952,7 +1957,7 @@ declare module ng {
    * };
    * 
    * MyComponent.annotations = [
-   *   new ng.Component({...})
+   *   new ng.Component({...}),
    *   new ng.View({...})
    * ]
    * MyComponent.parameters = [
@@ -2007,7 +2012,7 @@ declare module ng {
    * };
    * 
    * MyComponent.annotations = [
-   *   new ng.Component({...})
+   *   new ng.Component({...}),
    *   new ng.View({...})
    * ]
    * MyComponent.parameters = [
@@ -2304,10 +2309,10 @@ declare module ng {
    * is equivalent to ES6:
    * 
    * ```
-   * @Component(...)
-   * @View(...)
-   * class MyApp {
-   *   ...
+   * class MyService {
+   *   constructor(name: string, @Query() queryList: QueryList) {
+   *     ...
+   *   }
    * }
    * ```
    * 
@@ -2327,7 +2332,6 @@ declare module ng {
    *     this.size = size;
    *   }
    * });
-   * 
    * ```
    */
   function Class(clsDef: ClassDefinition): Type;
@@ -2335,16 +2339,12 @@ declare module ng {
 
     
   /**
-   * Represents a Angular's representation of an Application.
-   * 
-   * `ApplicationRef` represents a running application instance. Use it to retrieve the host
-   * component, injector,
-   * or dispose of an application.
+   * Declares the interface to be used with {@link Class}.
    */
   interface ClassDefinition {
     
     /**
-     * Returns the current {@link Component} instance.
+     * Optional argument for specifying the superclass.
      */
     extends?: Type;
     
@@ -2387,7 +2387,7 @@ declare module ng {
   interface TypeDecorator {
     
     /**
-     * Returns the base URL of the currently running application.
+     * Invoke as ES7 decorator.
      */
     <T extends Type>(type: T): T;
     
@@ -2399,15 +2399,11 @@ declare module ng {
     annotations: any[];
     
     /**
-     * Returns the base URL to the component source file.
-     * The returned URL could be:
-     * - an absolute URL,
-     * - a path relative to the application
+     * Generate a class from the definition and annotate it with {@link TypeDecorator#annotations}.
      */
     Class(obj: ClassDefinition): Type;
     
   }
-  
 
     
   /**
@@ -3460,7 +3456,6 @@ declare module ng {
     displayName: string;
     
   }
-  
 
     
   /**
@@ -3531,7 +3526,6 @@ declare module ng {
     constructor(injector: Injector, key: Key);
     
   }
-  
 
     
   /**
@@ -4583,8 +4577,6 @@ declare module ng {
    * 
    * bootstrap(App).catch(err => console.error(err));
    * ```
-   * 
-   * Retrieving `A` or `B` throws a `CyclicDependencyError` as the graph above cannot be constructed.
    */
   interface AfterContentInit {
     
@@ -4755,12 +4747,6 @@ declare module ng {
     afterViewChecked(): void;
     
   }
-  
-  class OpaqueToken {
-    
-     toString(): string;
-  }
-  
 
     
   /**
@@ -5363,7 +5349,6 @@ declare module ng {
     loadNextToLocation(type: Type, location: ElementRef, bindings?: ResolvedBinding[]): Promise<ComponentRef>;
     
   }
-  
 
     
   /**
@@ -5497,18 +5482,6 @@ declare module ng {
     setLocal(variableName: string, value: any): void;
     
   }
-  
-
-  /**
-   * Creates a request options object similar to the `RequestInit` description
-   * in the [Fetch
-   * Spec](https://fetch.spec.whatwg.org/#requestinit) to be optionally provided when instantiating a
-   * {@link Request}.
-   * 
-   * All values are null by default.
-   */
-  class RequestOptions implements IRequestOptions {
-    
 
     
   /**
@@ -5523,7 +5496,6 @@ declare module ng {
   interface HostViewRef {
     
   }
-  
 
     
   /**
@@ -5669,7 +5641,6 @@ declare module ng {
     detach(index?: number): ViewRef;
     
   }
-  
 
     
   /**
@@ -6255,9 +6226,9 @@ declare module ng {
    * # Example:
    * 
    * ```
-   * <select ng-control="city">
-   *   <option *ng-for="#c of cities" [value]="c"></option>
-   * </select>
+   * <div class="message" [ng-class]="{error: errorCount > 0}">
+   *     Please check errors.
+   * </div>
    * ```
    */
   class NgClass implements DoCheck,  OnDestroy {
@@ -16930,9 +16901,6 @@ declare module ngUi {
     bus: MessageBus;
     
   }
-  
-  class Renderer {
-    
 
     
   /**
@@ -16967,7 +16935,8 @@ declare module ngUi {
     from(channel: string): EventEmitter;
     
     /**
-     * Detaches a fragment.
+     * Returns an {@link EventEmitter} for the given channel
+     * To publish methods to that channel just call next (or add in dart) on the returned emitter
      */
     to(channel: string): EventEmitter;
     
@@ -17018,7 +16987,8 @@ declare module ngUi {
     attachToZone(zone: NgZone): void;
     
     /**
-     * Sets a class on an element.
+     * Returns an {@link EventEmitter} for the given channel
+     * To publish methods to that channel just call next (or add in dart) on the returned emitter
      */
     to(channel: string): EventEmitter;
     
@@ -17128,8 +17098,8 @@ declare module ngUi {
   
 }
 
-
-
-declare module "angular2/angular2" {
-  export = ng;
+declare module "angular2/web_worker/ui" {
+  export = ngUi;
 }
+
+

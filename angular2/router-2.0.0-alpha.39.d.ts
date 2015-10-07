@@ -8,7 +8,13 @@
 // Please do not create manual edits or send pull requests
 // modifying this file.
 // ***********************************************************
+
+// angular2/router depends transitively on these libraries.
+// If you don't have them installed you can install them using TSD
+// https://github.com/DefinitelyTyped/tsd
+
 ///<reference path="./angular2.d.ts"/>
+
 
 
 
@@ -86,12 +92,6 @@ declare module ngRouter {
      * 
      * # Usage
      * 
-     * ```
-     * router.config({ 'path': '/', 'component': IndexCmp});
-     * ```
-     *
-     * Or:
-     *
      * ```
      * router.config([
      *   { 'path': '/', 'component': IndexComp },
@@ -179,17 +179,21 @@ declare module ngRouter {
     name: string;
     
     /**
-     * Given an instruction, update the contents of this outlet.
+     * Called by the Router to instantiate a new component during the commit phase of a navigation.
+     * This method in turn is responsible for calling the `onActivate` hook of its child.
      */
     activate(nextInstruction: ComponentInstruction): Promise<any>;
     
     /**
-     * Called by Router during recognition phase
+     * Called by the {@link Router} during the commit phase of a navigation when an outlet
+     * reuses a component between different routes.
+     * This method in turn is responsible for calling the `onReuse` hook of its child.
      */
     reuse(nextInstruction: ComponentInstruction): Promise<any>;
     
     /**
-     * Called by Router during recognition phase
+     * Called by the {@link Router} when an outlet reuses a component across navigations.
+     * This method in turn is responsible for calling the `onReuse` hook of its child.
      */
     deactivate(nextInstruction: ComponentInstruction): Promise<any>;
     
@@ -224,9 +228,9 @@ declare module ngRouter {
    * Consider the following route configuration:
    * 
    * ```
-   * @RouteConfig({
-   *   path: '/user', component: UserCmp, as: 'user'
-   * });
+   * @RouteConfig([
+   *   { path: '/user', component: UserCmp, as: 'user' }
+   * ]);
    * class MyComp {}
    * ```
    * 
@@ -1320,5 +1324,7 @@ declare module ngRouter {
 }
 
 declare module "angular2/router" {
-  export = ng;
+  export = ngRouter;
 }
+
+
