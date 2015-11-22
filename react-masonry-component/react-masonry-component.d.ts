@@ -5,11 +5,8 @@
 
 ///<reference path='../react/react.d.ts' />
 
-declare module ReactMasonry {
+declare module "react-masonry-component" {
     import React = __React;
-
-    // Decorated React Components
-    // ----------------------------------------------------------------------
 
     class Masonry extends React.Component<MasonryProps, {}> {}
 
