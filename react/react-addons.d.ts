@@ -332,7 +332,17 @@ declare module "react/addons" {
         ref?: string | ((component: T) => any);
     }
 
+    interface ClientRect {
+        bottom: number;
+        height: number;
+        left: number;
+        right: number;
+        top: number;
+        width: number;
+    }
+
     interface DOMAttributes extends Props<DOMComponent<any>> {
+        getBoundingClientRect(): ClientRect;
         onCopy?: ClipboardEventHandler;
         onCut?: ClipboardEventHandler;
         onPaste?: ClipboardEventHandler;
@@ -1048,4 +1058,3 @@ declare module "react/addons" {
         identifiedTouch(identifier: number): Touch;
     }
 }
-
