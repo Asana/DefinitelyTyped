@@ -1,7 +1,4 @@
 declare module "spark-md5" {
-  class SparkMD5 {
-    static hash: (s: string, raw?: boolean) => string;
-  }
-  
-  export = SparkMD5;
+    // This is a partial type definition and only shows the static method
+    export function hash(value: string, raw?: boolean): string;
 }
