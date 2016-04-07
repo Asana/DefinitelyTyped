@@ -127,7 +127,7 @@ declare module "quill" {
             styles?: {};
             theme?: string;
             id?: string;
-            tabindex?: string;
+            tabindex?: number;
         }
 
         export interface ThemeClass {
