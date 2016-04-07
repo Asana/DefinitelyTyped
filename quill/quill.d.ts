@@ -126,6 +126,8 @@ declare module "quill" {
             readOnly?: boolean;
             styles?: {};
             theme?: string;
+            id?: string;
+            tabindex?: string;
         }
 
         export interface ThemeClass {
