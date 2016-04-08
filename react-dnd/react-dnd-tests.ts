@@ -1,4 +1,6 @@
 ///<reference path="react-dnd.d.ts" />
+///<reference path="react-dnd-html5-backend.d.ts" />
+///<reference path="react-dnd-test-backend.d.ts" />
 "use strict";
 
 // Test adapted from the ReactDnD chess game tutorial:
@@ -13,13 +15,13 @@ import DragSource = ReactDnd.DragSource;
 import DropTarget = ReactDnd.DropTarget;
 import DragLayer = ReactDnd.DragLayer;
 import DragDropContext = ReactDnd.DragDropContext;
-import HTML5Backend, { getEmptyImage } from 'react-dnd/modules/backends/HTML5';
-import TestBackend = require('react-dnd/modules/backends/Test');
+import HTML5Backend, { getEmptyImage } from "react-dnd-html5-backend";
+import TestBackend from "react-dnd-test-backend";
 
 // Game Component
 // ----------------------------------------------------------------------
 
-namespace Game {
+module Game {
     var knightPosition = [0, 0];
     var observer: any = null;
 
@@ -59,7 +61,7 @@ var ItemTypes = {
 // Knight Component
 // ----------------------------------------------------------------------
 
-namespace Knight {
+module Knight {
     interface KnightP extends React.Props<Knight> {
         connectDragSource: ReactDnd.ConnectDragSource;
         connectDragPreview: ReactDnd.ConnectDragPreview;
@@ -111,7 +113,7 @@ namespace Knight {
 // Square Component
 // ----------------------------------------------------------------------
 
-namespace Square {
+module Square {
     interface SquareP extends React.Props<Square> {
         black: boolean;
     }
@@ -133,7 +135,7 @@ namespace Square {
 // BoardSquare Component
 // ----------------------------------------------------------------------
 
-namespace BoardSquare {
+module BoardSquare {
     interface BoardSquareP extends React.Props<BoardSquare> {
         x: number;
         y: number;
@@ -204,7 +206,7 @@ namespace BoardSquare {
 
 // Custom Drag Layer Component
 // ----------------------------------------------------------------------
-namespace CustomDragLayer {
+module CustomDragLayer {
     interface CustomDragLayerP extends React.Props<CustomDragLayer> {
         isDragging?: boolean;
         item?: Object;
@@ -231,7 +233,7 @@ namespace CustomDragLayer {
 // Board Component
 // ----------------------------------------------------------------------
 
-namespace Board {
+module Board {
     interface BoardP extends React.Props<Board> {
         knightPosition: number[];
     }
@@ -262,7 +264,7 @@ namespace Board {
         };
 
         render() {
-            var squares: React.ReactHTMLElement<HTMLDivElement>[] = [];
+            var squares: React.DOMElement<React.HTMLAttributes>[] = [];
             for (let i = 0; i < 64; i++) {
                 squares.push(this._renderSquare(i));
             }
