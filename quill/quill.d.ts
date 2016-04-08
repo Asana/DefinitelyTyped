@@ -26,7 +26,7 @@ declare module "quill" {
         addContainer(className: string): HTMLElement;
         constructor(container: HTMLElement, configs?: Quill.QuillConfig);
         addFormat(name: string, config: Quill.FormatConfig): boolean;
-        deleteText(start: number, end: number): void;
+        deleteText(start: number, end: number, source?: string): void;
         destroy(): void;
         focus(): void;
         formatText(start: number, end: number, format: Quill.Attributes, source?: string): void;
@@ -44,12 +44,12 @@ declare module "quill" {
         on(eventName: "text-change", listener: Quill.OnTextChangeListener): void;
         on(eventName: "selection-change", listener: Quill.OnSelectionChangeListener): void;
         on(eventName: string, listener: Quill.OnTextChangeListener | Quill.OnSelectionChangeListener): void;
-        prepareFormat(format: string, value: string): void;
-        setContents(delta: Quill.DeltaInit): void;
-        setHTML(html: string): void;
+        prepareFormat(format: string, value: string, source?: string): void;
+        setContents(delta: Quill.DeltaInit, source?: string): void;
+        setHTML(html: string, source?: string): void;
         setSelection(start: number, end: number, source?: string): void;
-        setText(text: string): void;
-        updateContents(delta: Quill.Delta): void;
+        setText(text: string, source?: string): void;
+        updateContents(delta: Quill.Delta, source?: string): void;
     }
 
     module Quill {
