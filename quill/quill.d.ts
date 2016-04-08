@@ -1,119 +1,183 @@
-// Type definitions for Quill
-// Project: http://quilljs.com
-// Definitions by: Sumit <https://github.com/sumitkm>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// Type definitions for quill.js
+// Project: https://github.com/quilljs/quill/tree/0.20.1
+// Definitions by: Asana <https://asana.com>
+// Definitions: https://github.com/Asana/DefinitelyTyped
 
-///<reference path="../eventemitter2/eventemitter2.d.ts" />
+declare module "quill" {
+    class Quill {
+        // we shouldn't be accessing the internal modules object, but we need
+        // this for now to hide the warning for replacing paste-manager. We should
+        // remove it after mergin our paste-manager PR into Quill.
+        static modules: any;
+        static DEFAULTS: Quill.QuillConfig;
 
-declare interface  DeltaStatic{
-	ops? : Array<any>;
-	retain?: any,
-	delete?: any,
-	insert?: any,
-	attributes?: any
-}
+        root: HTMLElement;
+        options: Quill.QuillConfig;
+        // by right we shouldn't access the editor attribute since it's not in the API
+        // unfortunately we need to access the leaf nodes of the document model
+        // for linkifications
+        editor: Quill.Editor;
 
-declare interface RangeStatic{
-	new(): RangeStatic;
-	start: number;
-	end: number;
-}
+        static require(internalQuillModule: "delta"): Quill.DeltaClass;
+        static require(internalQuillModule: string): any;
+        static registerModule(name: string, moduleClass: Quill.ModuleClass): void;
+        static registerTheme(name: string, theme: Quill.ThemeClass): void;
 
-declare interface QuillStatic {
-	new(selector: string, options?: Object):QuillStatic;
+        addContainer(className: string): HTMLElement;
+        constructor(container: HTMLElement, configs?: Quill.QuillConfig);
+        addFormat(name: string, config: Quill.FormatConfig): boolean;
+        deleteText(start: number, end: number, source?: string): void;
+        destroy(): void;
+        focus(): void;
+        formatText(start: number, end: number, format: Quill.Attributes, source?: string): void;
+        formatText(start: number, end: number, format: string, value: string): void;
+        formatLine(start: number, end: number, format: string, value: string, source?: string): void;
+        getContents(): Quill.DeltaInit;
+        getContents(start: number, end?: number): Quill.DeltaInit;
+        getHTML(): string;
+        getLength(): number;
+        getModule(name: string): any;
+        getSelection(): Quill.Range;
+        getText(): string;
+        getText(start: number, end: number): string;
+        insertText(index: number, text: string, formats?: Quill.Attributes, source?: string): void;
+        on(eventName: "text-change", listener: Quill.OnTextChangeListener): void;
+        on(eventName: "selection-change", listener: Quill.OnSelectionChangeListener): void;
+        on(eventName: string, listener: Quill.OnTextChangeListener | Quill.OnSelectionChangeListener): void;
+        prepareFormat(format: string, value: string, source?: string): void;
+        setContents(delta: Quill.DeltaInit, source?: string): void;
+        setHTML(html: string, source?: string): void;
+        setSelection(start: number, end: number, source?: string): void;
+        setText(text: string, source?: string): void;
+        updateContents(delta: Quill.Delta, source?: string): void;
+    }
 
-    on(eventName: string, callback: (delta: DeltaStatic, source: string) => void): EventEmitter2;
-    addModule(id: string, options: any) : Object;
+    module Quill {
+        export interface Editor {
+            doc: Document;
+            checkUpdate(): void;
+        }
 
-    getText(): string;
-    getText(start: number): string;
-    getText(start: number, end: number): string;
+        interface LeafOffsetTuple extends Array<Leaf | number> {
+            0: Leaf;
+            1: number;
+        }
 
-    getLength(): number;
+        interface LineOffsetTuple extends Array<Line | number> {
+            0: Line;
+            1: number;
+        }
 
-    getContents(): DeltaStatic;
-    getContents(start: number): DeltaStatic;
-    getContents(start: number, end: number): DeltaStatic;
+        export interface Document {
+            findLeafAt(point: number): LeafOffsetTuple;
+            findLineAt(point: number): LineOffsetTuple;
+        }
 
-    getHTML(): string;
+        export interface Leaf {
+            prev?: Leaf;
+            next?: Leaf;
+            length: number;
+            formats: Attributes;
+        }
 
-    insertText(index: number, text: string): void;
-    insertText(index: number, text: string, name: string, value: string): void;
-    insertText(index: number, text: string, formats: any): void;
-    insertText(index: number, text: string, source: string) : void;
-    insertText(index: number, text: string, name: string, value: string, source: string): void;
-    insertText(index: number, text: string, formats: any, source: string): void;
+        export interface Line {
+            prev?: Line;
+            next?: Line;
+            length: number;
+            formats: Attributes;
+        }
 
-    deleteText(start: number, end: number): void;
-    deleteText(start: number, end: number, source: string): void;
+        export interface Attributes {
+            background?: string;
+            bold?: boolean;
+            color?: string;
+            font?: string;
+            italic?: boolean;
+            link?: string;
+            size?: string;
+            strike?: boolean;
+            underline?: boolean;
 
-    formatText(start: number, end: number): void;
-    formatText(start: number, end: number, name: string, value: boolean): void;
-    formatText(start: number, end: number, formats: any): void;
-    formatText(start: number, end: number, source: string): void;
-    formatText(start: number, end: number, name: string, value: string, source: string): void;
-    formatText(start: number, end: number, formats: string, source: string): void;
+            align?: string;
+            bullet?: boolean;
+            list?: boolean;
 
+            image?: string;
+        }
 
-    formatLine(start: number, end: number): void;
-    formatLine(start: number, end: number, name: string, value: boolean): void;
-    formatLine(start: number, end: number, formats: any): void;
-    formatLine(start: number, end: number, source: string): void;
-    formatLine(start: number, end: number, name: string, value: string, source: string): void;
-    formatLine(start: number, end: number, formats: any, source: string): void;
+        export interface DeltaClass {
+            new(): Quill.Delta;
+            new<T extends Operation>(ops: T[]): Quill.DeltaOfType<T>;
+            new(ops: Quill.DeltaOperation[]): Quill.Delta;
+        }
 
+        export interface ModuleClass {
+            new(quill: Quill, option: any): any;
+        }
 
-    insertEmbed(index: number, type: string, url: string): void;
-    insertEmbed(index: number, type: string, url: string, source: string): void;
+        interface Operation {
+            attributes?: Attributes;
+        }
 
-    updateContents(delta: DeltaStatic): void;
+        interface QuillConfig {
+            formats?: string[];
+            modules?: {};
+            pollInterval?: number;
+            readOnly?: boolean;
+            styles?: {};
+            theme?: string;
+            id?: string;
+            tabindex?: number;
+        }
 
-    setContents(delta: DeltaStatic): void;
+        export interface ThemeClass {
+            new(quill: Quill, options: QuillConfig): {};
+            OPTIONS: QuillConfig;
+        }
 
-    setHTML(html: string): void;
+        export interface InsertOperation extends Operation {
+            insert: string|number;
+        }
 
-    setText(text: string): void;
+        export interface DeleteOperation extends Operation {
+            delete: number;
+        }
 
-    getSelection(): RangeStatic;
+        export interface RetainOperation extends Operation {
+            retain: number;
+        }
 
-    setSelection(start: number, end: number): void;
-    setSelection(start: number, end: number, source: string): void;
-    setSelection(range: RangeStatic): void;
-    setSelection(range: RangeStatic, source: string): void;
+        export type DeltaOperation = InsertOperation | DeleteOperation | RetainOperation;
 
-    prepareFormat(format: string, value: boolean): void;
+        export interface DeltaOfType<T> {
+            ops: Array<T>;
+            length(): number;
+            retain(characters: number): Delta;
+            compose(other: Delta): Delta;
+            diff(other: Delta): Delta;
+        }
 
-    focus(): void;
+        export interface DeltaInit extends DeltaOfType<InsertOperation> { }
 
-    getBounds(index: number): any;
+        export interface Delta extends DeltaOfType<DeltaOperation> { }
 
-    registerModule(name: string, callback: (quill: QuillStatic, options: any) => {}): any;
+        export interface Range {
+            start: number;
+            end: number;
+        }
 
-    addModule(name: string, options: any): any;
+        export interface FormatConfig {
+            tag: string;
+        }
 
-    getModule(name: string): any;
+        export interface OnTextChangeListener {
+            (delta: Quill.Delta, source: string): void;
+        }
 
-    onModuleLoad(name: string, callback: (input: any) => {}): void;
+        export interface OnSelectionChangeListener {
+            (range: Quill.Range): void;
+        }
+    }
 
-    addFormat(name: string, config: any): void;
-
-    addContainer(cssClass: string, before?: number): HTMLDivElement;
-}
-
-declare module "Range"
-{
-	var Range: RangeStatic;
-	export = Range;
-}
-
-declare var Delta: DeltaStatic;
-
-declare module "Delta"{
-	export = Delta;
-}
-
-declare var Quill: QuillStatic;
-
-declare module "Quill" {
-    export = Quill;
+    export = Quill
 }
