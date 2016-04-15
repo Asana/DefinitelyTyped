@@ -55,7 +55,7 @@ declare module "quill" {
     module Quill {
         export interface Editor {
             doc: Document;
-            checkUpdate(): void;
+            checkUpdate(source?: string): void;
         }
 
         interface LeafOffsetTuple extends Array<Leaf | number> {
