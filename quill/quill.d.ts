@@ -159,8 +159,8 @@ declare module "quill" {
             transformPosition(index: number): number;
 
             insert(insert: string|number, attributes?: Attributes): Delta;
-            delete(delete: number): Delta;
-            retain(retain: number, attributes?: Attributes): Delta;
+            delete(count: number): Delta;
+            retain(count: number, attributes?: Attributes): Delta;
         }
 
         export interface DeltaInit extends DeltaOfType<InsertOperation> { }
