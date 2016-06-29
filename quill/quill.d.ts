@@ -151,16 +151,20 @@ declare module "quill" {
 
         export interface DeltaOfType<T> {
             ops: Array<T>;
+
             length(): number;
-            retain(characters: number): Delta;
             compose(other: Delta): Delta;
             diff(other: Delta): Delta;
-            transform(other: Delta, priority: boolean): Delta;
+            transform(other: Delta, priority?: boolean): Delta;
             transformPosition(index: number): number;
 
-            insert(insert: string|number, attributes?: Attributes): Delta;
-            delete(count: number): Delta;
-            retain(count: number, attributes?: Attributes): Delta;
+            insert(text: string|number, attributes?: Attributes): Delta;
+            delete(length: number): Delta;
+            retain(length: number, attributes?: Attributes): Delta;
+
+            push(op: T): Delta;
+            chop(): Delta; // removes any no-op "retain" op from the end of the delta
+            slice(startIndex: number, endIndex: number): Delta;
         }
 
         export interface DeltaInit extends DeltaOfType<InsertOperation> { }
