@@ -165,6 +165,10 @@ declare module "quill" {
             push(op: T): Delta;
             chop(): Delta; // removes any no-op "retain" op from the end of the delta
             slice(startIndex: number, endIndex: number): Delta;
+
+            // Unlike most of the above methods, concat does not modify `this`;
+            // it returns a new delta
+            concat(other: Delta): Delta;
         }
 
         export interface DeltaInit extends DeltaOfType<InsertOperation> { }
