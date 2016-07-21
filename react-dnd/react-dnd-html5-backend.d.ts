@@ -6,7 +6,11 @@
 ///<reference path='./react-dnd.d.ts' />
 
 declare module "react-dnd-html5-backend" {
-  export enum NativeTypes { FILE, URL, TEXT }
+  export var NativeTypes: {
+    FILE: string,
+    URL: string,
+    TEXT: string
+  };
   export function getEmptyImage(): any; // Image
   export default class HTML5Backend implements __ReactDnd.Backend { }
 }

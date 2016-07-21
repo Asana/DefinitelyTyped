@@ -15,7 +15,7 @@ import DragSource = ReactDnd.DragSource;
 import DropTarget = ReactDnd.DropTarget;
 import DragLayer = ReactDnd.DragLayer;
 import DragDropContext = ReactDnd.DragDropContext;
-import HTML5Backend, { getEmptyImage } from "react-dnd-html5-backend";
+import HTML5Backend, { getEmptyImage, NativeTypes } from "react-dnd-html5-backend";
 import TestBackend from "react-dnd-test-backend";
 
 // Game Component
@@ -201,6 +201,7 @@ module BoardSquare {
     }
 
     export var DndBoardSquare = DropTarget(ItemTypes.KNIGHT, boardSquareTarget, boardSquareCollect)(BoardSquare);
+    export var fileDropTarget = DropTarget(NativeTypes.FILE, boardSquareTarget, boardSquareCollect)(BoardSquare);
     export var create = React.createFactory(DndBoardSquare);
 }
 
@@ -301,3 +302,4 @@ Board.createWithHTMLBackend({
 Board.createWithTestBackend({
     knightPosition: [0, 0]
 });
+
