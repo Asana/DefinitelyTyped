@@ -302,4 +302,3 @@ Board.createWithHTMLBackend({
 Board.createWithTestBackend({
     knightPosition: [0, 0]
 });
-
