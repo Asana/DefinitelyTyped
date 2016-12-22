@@ -4,7 +4,7 @@
 // Definitions: https://github.com/Asana/DefinitelyTyped
 
 declare module "quill" {
-    class Quill {
+    class Quill<T extends Quill.Attributes, E extends Quill.Attributes> {
         // we shouldn't be accessing the internal modules object, but we need
         // this for now to hide the warning for replacing paste-manager. We should
         // remove it after mergin our paste-manager PR into Quill.
@@ -16,7 +16,7 @@ declare module "quill" {
         // by right we shouldn't access the editor attribute since it's not in the API
         // unfortunately we need to access the leaf nodes of the document model
         // for linkifications
-        editor: Quill.Editor;
+        editor: Quill.Editor<T, E>;
 
         static require(internalQuillModule: "delta"): Quill.DeltaClass;
         static require(internalQuillModule: string): any;
@@ -29,94 +29,73 @@ declare module "quill" {
         deleteText(start: number, end: number, source?: string): void;
         destroy(): void;
         focus(): void;
-        formatText(start: number, end: number, format: Quill.Attributes, source?: string): void;
+        formatText(start: number, end: number, format: T|E, source?: string): void;
         formatText(start: number, end: number, format: string, value: string): void;
         formatLine(start: number, end: number, format: string, value: string, source?: string): void;
-        getContents(): Quill.DeltaInit;
-        getContents(start: number, end?: number): Quill.DeltaInit;
+        getContents(): Quill.DeltaInit<T, E>;
+        getContents(start: number, end?: number): Quill.DeltaInit<T, E>;
         getHTML(): string;
         getLength(): number;
         getModule(name: string): any;
         getSelection(): Quill.Range;
         getText(): string;
         getText(start: number, end: number): string;
-        insertText(index: number, text: string, formats?: Quill.Attributes, source?: string): void;
-        on(eventName: "text-change", listener: Quill.OnTextChangeListener): void;
+        insertText(index: number, text: string, formats?: T|E, source?: string): void;
+        on(eventName: "text-change", listener: Quill.OnTextChangeListener<T, E>): void;
         on(eventName: "selection-change", listener: Quill.OnSelectionChangeListener): void;
-        on(eventName: string, listener: Quill.OnTextChangeListener | Quill.OnSelectionChangeListener): void;
         prepareFormat(format: string, value: string, source?: string): void;
-        setContents(delta: Quill.DeltaInit, source?: string): void;
+        setContents(delta: Quill.DeltaInit<T, E>, source?: string): void;
         setHTML(html: string, source?: string): void;
         setSelection(start: number, end: number, source?: string): void;
         setText(text: string, source?: string): void;
-        updateContents(delta: Quill.Delta, source?: string): void;
+        updateContents(delta: Quill.Delta<T, E>, source?: string): void;
     }
 
     module Quill {
-        export interface Editor {
-            doc: Document;
+        export interface Editor<T extends Attributes, E extends Attributes> {
+            doc: Document<T, E>;
             checkUpdate(source?: string): void;
         }
 
-        interface LeafOffsetTuple extends Array<Leaf | number> {
-            0: Leaf;
+        interface LeafOffsetTuple<T extends Attributes, E extends Attributes> extends Array<Leaf<T, E> | number> {
+            0: Leaf<T, E>;
             1: number;
         }
 
-        interface LineOffsetTuple extends Array<Line | number> {
-            0: Line;
+        interface LineOffsetTuple<T extends Attributes> extends Array<Line<T> | number> {
+            0: Line<T>;
             1: number;
         }
 
-        export interface Document {
-            findLeafAt(point: number): LeafOffsetTuple;
-            findLineAt(point: number): LineOffsetTuple;
+        export interface Document<T extends Attributes, E extends Attributes> {
+            findLeafAt(point: number): LeafOffsetTuple<T, E>;
+            findLineAt(point: number): LineOffsetTuple<T>;
         }
 
-        export interface Leaf {
-            prev?: Leaf;
-            next?: Leaf;
+        export interface Leaf<T, E> {
+            prev?: Leaf<T, E>;
+            next?: Leaf<T, E>;
             length: number;
-            formats: Attributes;
+            formats: T & E;
         }
 
-        export interface Line {
-            prev?: Line;
-            next?: Line;
+        export interface Line<T extends Attributes> {
+            prev?: Line<T>;
+            next?: Line<T>;
             length: number;
-            formats: Attributes;
-        }
-
-        export interface Attributes {
-            background?: string;
-            bold?: boolean;
-            color?: string;
-            font?: string;
-            italic?: boolean;
-            link?: string;
-            size?: string;
-            strike?: boolean;
-            underline?: boolean;
-
-            align?: string;
-            bullet?: boolean;
-            list?: boolean;
-
-            image?: string;
+            formats: T;
         }
 
         export interface DeltaClass {
-            new(): Quill.Delta;
-            new<T extends Operation>(ops: T[]): Quill.DeltaOfType<T>;
-            new(ops: Quill.DeltaOperation[]): Quill.Delta;
+            new<T extends Attributes, E extends Attributes>(): Quill.DeltaOfType<T, E, any>;
+            new<T extends Attributes, E extends Attributes>(ops: InsertOperation<T, E>[]): Quill.DeltaOfType<T, E, InsertOperation<T, E>>;
+            new(ops: DeleteOperation[]): Quill.DeltaOfType<any, any, DeleteOperation>;
+            new<T extends Attributes, E extends Attributes>(ops: RetainOperation<T, E>[]): Quill.DeltaOfType<T, E, RetainOperation<T, E>>;
+            new<T extends Attributes, E extends Attributes>(ops: Quill.DeltaOperation<T, E>[]): Quill.Delta<T, E>;
         }
 
         export interface ModuleClass {
-            new(quill: Quill, option: any): any;
-        }
-
-        interface Operation {
-            attributes?: Attributes;
+            new(quill: Quill<any, any>, option: any): any;
         }
 
         interface QuillConfig {
@@ -131,49 +110,85 @@ declare module "quill" {
         }
 
         export interface ThemeClass {
-            new(quill: Quill, options: QuillConfig): {};
+            new(quill: Quill<any, any>, options: QuillConfig): {};
             OPTIONS: QuillConfig;
         }
 
-        export interface InsertOperation extends Operation {
-            insert: string|number;
+        export interface EmbedAttributes {
+            image?: string;
         }
 
-        export interface DeleteOperation extends Operation {
+        export interface TextAttributes {
+            background?: string;
+            bold?: boolean;
+            color?: string;
+            font?: string;
+            italic?: boolean;
+            link?: string;
+            size?: string;
+            strike?: boolean;
+            underline?: boolean;
+
+            align?: string;
+            bullet?: boolean;
+            list?: boolean;
+        }
+
+        export interface Attributes { [s: string]: boolean | string }
+
+        export interface QuillAttributes extends EmbedAttributes, TextAttributes {
+
+        }
+
+        export interface TextInsertOperation<TextAttributes extends Attributes> {
+            insert: string;
+            attributes?: TextAttributes;
+        }
+
+        export interface EmbedInsertOperation<EmbedAttributes extends Attributes> {
+            insert: number;
+            attributes: EmbedAttributes;
+        }
+
+        export type InsertOperation<T extends Attributes, E extends Attributes> = TextInsertOperation<T> | EmbedInsertOperation<E>;
+
+        export interface DeleteOperation {
             delete: number;
         }
 
-        export interface RetainOperation extends Operation {
+        export interface RetainOperation<T, E> {
             retain: number;
+            attributes?: T | E;
         }
 
-        export type DeltaOperation = InsertOperation | DeleteOperation | RetainOperation;
+        export type DeltaOperation<T extends Attributes, E extends Attributes> = InsertOperation<T, E> | DeleteOperation | RetainOperation<T, E>;
 
-        export interface DeltaOfType<T> {
-            ops: Array<T>;
+        export interface DeltaOfType<T extends Attributes, E extends Attributes, D extends DeltaOperation<T, E>> {
+            ops: Array<D>;
 
             length(): number;
-            compose(other: Delta): Delta;
-            diff(other: Delta): Delta;
-            transform(other: Delta, priority?: boolean): Delta;
+            compose(other: Delta<T, E>): Delta<T, E>;
+            diff(other: Delta<T, E>): Delta<T, E>;
+            transform(other: Delta<T, E>, priority?: boolean): Delta<T, E>;
             transformPosition(index: number): number;
 
-            insert(text: string|number, attributes?: Attributes): Delta;
-            delete(length: number): Delta;
-            retain(length: number, attributes?: Attributes): Delta;
+            insert(text: number, attributes?: E): Delta<T, E>;
+            insert(text: string, attributes?: T): Delta<T, E>;
+            delete(length: number): Delta<T, E>;
+            retain(length: number, attributes?: T | E): Delta<T, E>;
 
-            push(op: T): Delta;
-            chop(): Delta; // removes any no-op "retain" op from the end of the delta
-            slice(startIndex: number, endIndex: number): Delta;
+            push(op: D): Delta<T, E>;
+            chop(): Delta<T, E>; // removes any no-op "retain" op from the end of the delta
+            slice(startIndex: number, endIndex: number): Delta<T, E>;
 
             // Unlike most of the above methods, concat does not modify `this`;
             // it returns a new delta
-            concat(other: Delta): Delta;
+            concat(other: Delta<T, E>): Delta<T, E>;
         }
 
-        export interface DeltaInit extends DeltaOfType<InsertOperation> { }
+        export type DeltaInit<T extends Attributes, E extends Attributes> = DeltaOfType<T, E, InsertOperation<T, E>>;
 
-        export interface Delta extends DeltaOfType<DeltaOperation> { }
+        export type Delta<T extends Attributes, E extends Attributes> = DeltaOfType<T, E, DeltaOperation<T, E>>;
 
         export interface Range {
             start: number;
@@ -184,8 +199,8 @@ declare module "quill" {
             tag: string;
         }
 
-        export interface OnTextChangeListener {
-            (delta: Quill.Delta, source: string): void;
+        export interface OnTextChangeListener<T extends Attributes, E extends Attributes> {
+            (delta: Quill.Delta<T, E>, source: string): void;
         }
 
         export interface OnSelectionChangeListener {
