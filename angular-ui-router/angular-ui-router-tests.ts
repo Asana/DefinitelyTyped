@@ -1,6 +1,8 @@
-/// <reference path="angular-ui-router.d.ts" />
+import * as ng from 'angular';
+import * as angular from 'angular';
 
-var myApp = angular.module('testModule');
+import uiRouterModule from "angular-ui-router";
+var myApp = angular.module("testModule", [uiRouterModule]);
 
 interface MyAppScope extends ng.IScope {
 	items: string[];
@@ -141,6 +143,8 @@ class UrlLocatorTestService implements IUrlLocatorTestService {
         private $state: ng.ui.IStateService
     ) {
         $rootScope.$on("$locationChangeSuccess", (event: ng.IAngularEvent) => this.onLocationChangeSuccess(event));
+        $rootScope.$on('$stateNotFound', (event: ng.IAngularEvent, unfoundState: ng.ui.IUnfoundState, fromState: ng.ui.IState, fromParams: {}) =>
+                                              this.onStateNotFound(event, unfoundState, fromState, fromParams));
     }
 
     public currentUser: any;
@@ -153,14 +157,23 @@ class UrlLocatorTestService implements IUrlLocatorTestService {
 
             // Note that we do not concern ourselves with what to do if this request fails,
             // because if it fails, the web page will be redirected away to the login screen.
-            this.$http({ url: "/api/me", method: "GET" }).success((user: any) => {
-                this.currentUser = user;
+            this.$http({ url: "/api/me", method: "GET" }).then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                this.currentUser = response.data;
 
                 // sync the ui-state with the location in the browser, which effectively
                 // restarts the state change that was stopped previously
                 this.$urlRouter.sync();
             });
         }
+    }
+
+     private onStateNotFound(event: ng.IAngularEvent,
+                             unfoundState: ng.ui.IUnfoundState,
+                             fromState: ng.ui.IState,
+                             fromParams: {}) {
+        var unfoundTo: string = unfoundState.to;
+        var unfoundToParams: {} = unfoundState.toParams;
+        var unfoundOptions: ng.ui.IStateOptions = unfoundState.options
     }
 
     private stateServiceTest() {

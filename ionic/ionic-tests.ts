@@ -1,4 +1,4 @@
-/// <reference path="./ionic.d.ts" />
+
 
 var testIonic = angular.module('testIonic', ['ionic']);
 
@@ -9,6 +9,8 @@ testIonic.config(['$ionicConfigProvider', ($ionicConfigProvider: ionic.utility.I
     $ionicConfigProvider.views.maxCache(10);
     var forwardCache: boolean = $ionicConfigProvider.views.forwardCache();
     $ionicConfigProvider.views.forwardCache(true);
+    var swipeBackEnabled: boolean = $ionicConfigProvider.views.swipeBackEnabled();
+    $ionicConfigProvider.views.swipeBackEnabled(true);
 
     var jsScrolling: boolean = $ionicConfigProvider.scrolling.jsScrolling();
     $ionicConfigProvider.scrolling.jsScrolling(true);
@@ -165,15 +167,19 @@ class IonicTestController {
 
         var viewHistory = this.$ionicHistory.viewHistory();
         var currentView = this.$ionicHistory.currentView();
+        this.$ionicHistory.currentView({viewId: 1});
         var currentHistoryId: string = this.$ionicHistory.currentHistoryId();
         this.$ionicHistory.currentTitle("currentTitle");
         var currentTitle: string = this.$ionicHistory.currentTitle();
         var backView = this.$ionicHistory.backView();
+        this.$ionicHistory.backView({viewId: 1});
         var backTitle: string = this.$ionicHistory.backTitle();
         var forwardView = this.$ionicHistory.forwardView();
+        this.$ionicHistory.forwardView({viewId: 1});
         var currentStateName: string = this.$ionicHistory.currentStateName();
 
         this.$ionicHistory.goBack(5);
+        this.$ionicHistory.removeBackView();
         this.$ionicHistory.clearHistory();
         this.$ionicHistory.clearCache().then(() => console.log("done clearing cache!"));
         this.$ionicHistory.nextViewOptions({
@@ -387,6 +393,7 @@ class IonicTestController {
         ready = ionic.Platform.ready(callbackWithReturn);
         var setGrade: void = ionic.Platform.setGrade('iOS');
         var deviceInformation: string = ionic.Platform.device();
+        var isBrowser: boolean = ionic.Platform.is('browser');
         var isWebView: boolean = ionic.Platform.isWebView();
         var isIPad: boolean = ionic.Platform.isIPad();
         var isIOS: boolean = ionic.Platform.isIOS();
