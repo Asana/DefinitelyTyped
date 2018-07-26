@@ -1,4 +1,4 @@
-// Type definitions for core-js v0.9.7
+﻿// Type definitions for core-js v0.9.7
 // Project: https://github.com/zloirock/core-js/
 // Definitions by: Ron Buckton <http://github.com/rbuckton>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -18,7 +18,7 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
-declare type PropertyKey = string | number | symbol;
+declare type _PropertyKey = string | number | symbol;
 
 // #############################################################################################
 // ECMAScript 6: Object & Function
@@ -31,34 +31,7 @@ interface ObjectConstructor {
       * Copy the values of all of the enumerable own properties from one or more source objects to a
       * target object. Returns the target object.
       * @param target The target object to copy to.
-      * @param source The source object from which to copy properties.
-      */
-    assign<T, U>(target: T, source: U): T & U;
-
-    /**
-      * Copy the values of all of the enumerable own properties from one or more source objects to a
-      * target object. Returns the target object.
-      * @param target The target object to copy to.
-      * @param source1 The first source object from which to copy properties.
-      * @param source2 The second source object from which to copy properties.
-      */
-    assign<T, U, V>(target: T, source1: U, source2: V): T & U & V;
-
-    /**
-      * Copy the values of all of the enumerable own properties from one or more source objects to a
-      * target object. Returns the target object.
-      * @param target The target object to copy to.
-      * @param source1 The first source object from which to copy properties.
-      * @param source2 The second source object from which to copy properties.
-      * @param source3 The third source object from which to copy properties.
-      */
-    assign<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;
-
-    /**
-      * Copy the values of all of the enumerable own properties from one or more source objects to a
-      * target object. Returns the target object.
-      * @param target The target object to copy to.
-      * @param sources One or more source objects from which to copy properties
+      * @param sources One or more source objects to copy properties from.
       */
     assign(target: any, ...sources: any[]): any;
 
@@ -111,11 +84,11 @@ interface Array<T> {
     find(predicate: (value: T, index: number, obj: Array<T>) => boolean, thisArg?: any): T;
 
     /**
-      * Returns the index of the first element in the array where predicate is true, and -1
+      * Returns the index of the first element in the array where predicate is true, and undefined
       * otherwise.
       * @param predicate find calls predicate once for each element of the array, in ascending
       * order, until it finds one where predicate returns true. If such an element is found, find
-      * immediately returns that element value. Otherwise, find returns -1.
+      * immediately returns that element value. Otherwise, find returns undefined.
       * @param thisArg If provided, it will be used as the this value for each invocation of
       * predicate. If it is not provided, undefined is used instead.
       */
@@ -569,13 +542,13 @@ interface Object {
       * Determines whether an object has a property with the specified name.
       * @param v A property name.
       */
-    hasOwnProperty(v: PropertyKey): boolean;
+    hasOwnProperty(v: _PropertyKey): boolean;
 
     /**
       * Determines whether a specified property is enumerable.
       * @param v A property name.
       */
-    propertyIsEnumerable(v: PropertyKey): boolean;
+    propertyIsEnumerable(v: _PropertyKey): boolean;
 }
 
 interface ObjectConstructor {
@@ -592,7 +565,7 @@ interface ObjectConstructor {
       * @param o Object that contains the property.
       * @param p Name of the property.
     */
-    getOwnPropertyDescriptor(o: any, propertyKey: PropertyKey): PropertyDescriptor;
+    getOwnPropertyDescriptor(o: any, propertyKey: _PropertyKey): PropertyDescriptor;
 
     /**
       * Adds a property to an object, or modifies attributes of an existing property.
@@ -602,7 +575,7 @@ interface ObjectConstructor {
       * @param attributes Descriptor for the property. It can be for a data property or an accessor
       *  property.
       */
-    defineProperty(o: any, propertyKey: PropertyKey, attributes: PropertyDescriptor): any;
+    defineProperty(o: any, propertyKey: _PropertyKey, attributes: PropertyDescriptor): any;
 }
 
 interface Math {
@@ -817,16 +790,7 @@ interface PromiseConstructor {
      * @param values An array of Promises.
      * @returns A new Promise.
      */
-    all<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>, T5 | PromiseLike<T5>, T6 | PromiseLike<T6>, T7 | PromiseLike<T7>, T8 | PromiseLike<T8>, T9 | PromiseLike<T9>, T10 | PromiseLike<T10>]): Promise<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]>;
-    all<T1, T2, T3, T4, T5, T6, T7, T8, T9>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>, T5 | PromiseLike<T5>, T6 | PromiseLike<T6>, T7 | PromiseLike<T7>, T8 | PromiseLike<T8>, T9 | PromiseLike<T9>]): Promise<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>;
-    all<T1, T2, T3, T4, T5, T6, T7, T8>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>, T5 | PromiseLike<T5>, T6 | PromiseLike<T6>, T7 | PromiseLike<T7>, T8 | PromiseLike<T8>]): Promise<[T1, T2, T3, T4, T5, T6, T7, T8]>;
-    all<T1, T2, T3, T4, T5, T6, T7>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>, T5 | PromiseLike<T5>, T6 | PromiseLike<T6>, T7 | PromiseLike<T7>]): Promise<[T1, T2, T3, T4, T5, T6, T7]>;
-    all<T1, T2, T3, T4, T5, T6>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>, T5 | PromiseLike<T5>, T6 | PromiseLike<T6>]): Promise<[T1, T2, T3, T4, T5, T6]>;
-    all<T1, T2, T3, T4, T5>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>, T5 | PromiseLike<T5>]): Promise<[T1, T2, T3, T4, T5]>;
-    all<T1, T2, T3, T4>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>, T4 | PromiseLike <T4>]): Promise<[T1, T2, T3, T4]>;
-    all<T1, T2, T3>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>, T3 | PromiseLike<T3>]): Promise<[T1, T2, T3]>;
-    all<T1, T2>(values: [T1 | PromiseLike<T1>, T2 | PromiseLike<T2>]): Promise<[T1, T2]>;
-    all<TAll>(values: Iterable<TAll | PromiseLike<TAll>>): Promise<TAll[]>;
+    all<T>(values: Iterable<T | PromiseLike<T>>): Promise<T[]>;
 
     /**
      * Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
@@ -874,23 +838,23 @@ declare var Promise: PromiseConstructor;
 declare namespace Reflect {
     function apply(target: Function, thisArgument: any, argumentsList: ArrayLike<any>): any;
     function construct(target: Function, argumentsList: ArrayLike<any>, newTarget?: any): any;
-    function defineProperty(target: any, propertyKey: PropertyKey, attributes: PropertyDescriptor): boolean;
-    function deleteProperty(target: any, propertyKey: PropertyKey): boolean;
+    function defineProperty(target: any, propertyKey: _PropertyKey, attributes: PropertyDescriptor): boolean;
+    function deleteProperty(target: any, propertyKey: _PropertyKey): boolean;
     function enumerate(target: any): IterableIterator<any>;
-    function get(target: any, propertyKey: PropertyKey, receiver?: any): any;
-    function getOwnPropertyDescriptor(target: any, propertyKey: PropertyKey): PropertyDescriptor;
+    function get(target: any, propertyKey: _PropertyKey, receiver?: any): any;
+    function getOwnPropertyDescriptor(target: any, propertyKey: _PropertyKey): PropertyDescriptor;
     function getPrototypeOf(target: any): any;
-    function has(target: any, propertyKey: PropertyKey): boolean;
+    function has(target: any, propertyKey: _PropertyKey): boolean;
     function isExtensible(target: any): boolean;
-    function ownKeys(target: any): Array<PropertyKey>;
+    function ownKeys(target: any): Array<_PropertyKey>;
     function preventExtensions(target: any): boolean;
-    function set(target: any, propertyKey: PropertyKey, value: any, receiver?: any): boolean;
+    function set(target: any, propertyKey: _PropertyKey, value: any, receiver?: any): boolean;
     function setPrototypeOf(target: any, proto: any): boolean;
 }
 
 // #############################################################################################
 // ECMAScript 7
-// Modules: es7.array.includes, es7.string.at, es7.string.pad-start, es7.string.pad-end,
+// Modules: es7.array.includes, es7.string.at, es7.string.lpad, es7.string.rpad,
 //          es7.object.to-array, es7.object.get-own-property-descriptors, es7.regexp.escape,
 //          es7.map.to-json, and es7.set.to-json
 // #############################################################################################
@@ -901,8 +865,8 @@ interface Array<T> {
 
 interface String {
     at(index: number): string;
-    padStart(length: number, fillStr?: string): string;
-    padEnd(length: number, fillStr?: string): string;
+    lpad(length: number, fillStr?: string): string;
+    rpad(length: number, fillStr?: string): string;
 }
 
 interface ObjectConstructor {
@@ -1193,25 +1157,25 @@ interface DictConstructor {
 
     isDict(value: any): boolean;
     values<T>(object: Dict<T>): IterableIterator<T>;
-    keys<T>(object: Dict<T>): IterableIterator<PropertyKey>;
-    entries<T>(object: Dict<T>): IterableIterator<[PropertyKey, T]>;
-    has<T>(object: Dict<T>, key: PropertyKey): boolean;
-    get<T>(object: Dict<T>, key: PropertyKey): T;
-    set<T>(object: Dict<T>, key: PropertyKey, value: T): Dict<T>;
-    forEach<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => void, thisArg?: any): void;
-    map<T, U>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => U, thisArg?: any): Dict<U>;
-    mapPairs<T, U>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => [PropertyKey, U], thisArg?: any): Dict<U>;
-    filter<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): Dict<T>;
-    some<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): boolean;
-    every<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): boolean;
-    find<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): T;
-    findKey<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): PropertyKey;
-    keyOf<T>(object: Dict<T>, value: T): PropertyKey;
+    keys<T>(object: Dict<T>): IterableIterator<_PropertyKey>;
+    entries<T>(object: Dict<T>): IterableIterator<[_PropertyKey, T]>;
+    has<T>(object: Dict<T>, key: _PropertyKey): boolean;
+    get<T>(object: Dict<T>, key: _PropertyKey): T;
+    set<T>(object: Dict<T>, key: _PropertyKey, value: T): Dict<T>;
+    forEach<T>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => void, thisArg?: any): void;
+    map<T, U>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => U, thisArg?: any): Dict<U>;
+    mapPairs<T, U>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => [_PropertyKey, U], thisArg?: any): Dict<U>;
+    filter<T>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): Dict<T>;
+    some<T>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): boolean;
+    every<T>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): boolean;
+    find<T>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): T;
+    findKey<T>(object: Dict<T>, callbackfn: (value: T, key: _PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): _PropertyKey;
+    keyOf<T>(object: Dict<T>, value: T): _PropertyKey;
     includes<T>(object: Dict<T>, value: T): boolean;
-    reduce<T, U>(object: Dict<T>, callbackfn: (previousValue: U, value: T, key: PropertyKey, dict: Dict<T>) => U, initialValue: U): U;
-    reduce<T>(object: Dict<T>, callbackfn: (previousValue: T, value: T, key: PropertyKey, dict: Dict<T>) => T, initialValue?: T): T;
-    turn<T, U>(object: Dict<T>, callbackfn: (memo: Dict<U>, value: T, key: PropertyKey, dict: Dict<T>) => void, memo: Dict<U>): Dict<U>;
-    turn<T>(object: Dict<T>, callbackfn: (memo: Dict<T>, value: T, key: PropertyKey, dict: Dict<T>) => void, memo?: Dict<T>): Dict<T>;
+    reduce<T, U>(object: Dict<T>, callbackfn: (previousValue: U, value: T, key: _PropertyKey, dict: Dict<T>) => U, initialValue: U): U;
+    reduce<T>(object: Dict<T>, callbackfn: (previousValue: T, value: T, key: _PropertyKey, dict: Dict<T>) => T, initialValue?: T): T;
+    turn<T, U>(object: Dict<T>, callbackfn: (memo: Dict<U>, value: T, key: _PropertyKey, dict: Dict<T>) => void, memo: Dict<U>): Dict<U>;
+    turn<T>(object: Dict<T>, callbackfn: (memo: Dict<T>, value: T, key: _PropertyKey, dict: Dict<T>) => void, memo?: Dict<T>): Dict<T>;
 }
 
 /**
@@ -1302,23 +1266,21 @@ interface String {
 declare function delay(msec: number): Promise<void>;
 
 declare namespace core {
-    var version: string;
-
     namespace Reflect {
         function apply(target: Function, thisArgument: any, argumentsList: ArrayLike<any>): any;
         function construct(target: Function, argumentsList: ArrayLike<any>): any;
-        function defineProperty(target: any, propertyKey: PropertyKey, attributes: PropertyDescriptor): boolean;
-        function deleteProperty(target: any, propertyKey: PropertyKey): boolean;
+        function defineProperty(target: any, propertyKey: _PropertyKey, attributes: PropertyDescriptor): boolean;
+        function deleteProperty(target: any, propertyKey: _PropertyKey): boolean;
         function enumerate(target: any): IterableIterator<any>;
-        function get(target: any, propertyKey: PropertyKey, receiver?: any): any;
-        function getOwnPropertyDescriptor(target: any, propertyKey: PropertyKey): PropertyDescriptor;
+        function get(target: any, propertyKey: _PropertyKey, receiver?: any): any;
+        function getOwnPropertyDescriptor(target: any, propertyKey: _PropertyKey): PropertyDescriptor;
         function getPrototypeOf(target: any): any;
         function has(target: any, propertyKey: string): boolean;
         function has(target: any, propertyKey: symbol): boolean;
         function isExtensible(target: any): boolean;
-        function ownKeys(target: any): Array<PropertyKey>;
+        function ownKeys(target: any): Array<_PropertyKey>;
         function preventExtensions(target: any): boolean;
-        function set(target: any, propertyKey: PropertyKey, value: any, receiver?: any): boolean;
+        function set(target: any, propertyKey: _PropertyKey, value: any, receiver?: any): boolean;
         function setPrototypeOf(target: any, proto: any): boolean;
     }
 
@@ -1340,8 +1302,8 @@ declare namespace core {
         is(value1: any, value2: any): boolean;
         setPrototypeOf(o: any, proto: any): any;
         getOwnPropertySymbols(o: any): symbol[];
-        getOwnPropertyDescriptor(o: any, propertyKey: PropertyKey): PropertyDescriptor;
-        defineProperty(o: any, propertyKey: PropertyKey, attributes: PropertyDescriptor): any;
+        getOwnPropertyDescriptor(o: any, propertyKey: _PropertyKey): PropertyDescriptor;
+        defineProperty(o: any, propertyKey: _PropertyKey, attributes: PropertyDescriptor): any;
         values(object: any): any[];
         entries(object: any): any[];
         getOwnPropertyDescriptors(object: any): PropertyDescriptorMap;
@@ -1889,7 +1851,7 @@ declare module "core-js/fn/number/max-safe-integer" {
     var MAX_SAFE_INTEGER: typeof core.Number.MAX_SAFE_INTEGER;
     export = MAX_SAFE_INTEGER;
 }
-declare module "core-js/fn/number/min-safe-integer" {
+declare module "core-js/fn/number/min-safe-interger" {
     var MIN_SAFE_INTEGER: typeof core.Number.MIN_SAFE_INTEGER;
     export = MIN_SAFE_INTEGER;
 }
@@ -2668,7 +2630,7 @@ declare module "core-js/library/fn/number/max-safe-integer" {
     var MAX_SAFE_INTEGER: typeof core.Number.MAX_SAFE_INTEGER;
     export = MAX_SAFE_INTEGER;
 }
-declare module "core-js/library/fn/number/min-safe-integer" {
+declare module "core-js/library/fn/number/min-safe-interger" {
     var MIN_SAFE_INTEGER: typeof core.Number.MIN_SAFE_INTEGER;
     export = MIN_SAFE_INTEGER;
 }
